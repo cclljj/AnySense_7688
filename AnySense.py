@@ -7,7 +7,7 @@ import re
 from threading import Timer
 from datetime import datetime
 
-import pm_g3 as air_sensor
+import pm_g5t as air_sensor
 import th_htu21d as tmp_sensor
 import light_bh1750fvi as light_sensor
 from multiprocessing import Queue
@@ -64,6 +64,7 @@ def upload_data():
 			msg = msg + "|" + item + "=" + tq 
 	MQTT = mqtt.mqtt(MQTT_broker,MQTT_port,MQTT_topic + "/" + DEVICE_ID)
 	MQTT.pub(msg)
+	print msg
 	
 
 if __name__ == '__main__':

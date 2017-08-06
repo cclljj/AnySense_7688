@@ -1,0 +1,35 @@
+uint16_t LASS4U::CO2getValue(void){
+	const byte _message[8] = {0xFE, 0x04, 0x00, 0x00, 0x00, 0x04, 0xE5, 0xC6};
+	byte _incomeByte[13];
+	byte _readcount=0;
+	boolean _readComplete = false;
+	CRC _mycrc;
+    memset(_incomeByte,0,sizeof(_incomeByte));
+    delay(1);
+    AQSerial->write(_message, sizeof(_message));
+    AQSerial->flush();
+    long startTime = millis();
+	  while(true){
+	    if(AQSerial->available()) {
+	      byte inChar = (byte)AQSerial->read();
+	      _incomeByte[_readcount] = inChar;
+	      _readcount++;
+	      if (_readcount==13) {
+	        _readComplete = true;
+	        break;
+	      }
+	    }
+		if ((millis()-startTime)>250){
+			break;
+		}
+	  }
+    unsigned short crc;
+    crc =_mycrc.CRC16(_incomeByte,13);
+    uint16_t co2;
+    if(crc != 0){  
+    	co2=0;
+    } else {
+    	co2 =((unsigned int)_incomeByte[9]<<8) +(unsigned int)_incomeByte[10];
+    }
+    return co2;
+}
