@@ -1,4 +1,4 @@
-This is the AnySense project for MediaTek LinkIt 7688 board. The codes are based on MRAA library in Python, so hopefully it will run smoothly on the other MRAA-supported boards.
+This is the AnySense project for MediaTek LinkIt 7688 board. The codes will conduct sensing tasks and report the results to the LASS MQTT broker. The codes are based on MRAA library in Python, so hopefully it will run smoothly on the other MRAA-supported boards.
 
 ## Sensors supported
 ### Temperature and Humidity Sensor
@@ -26,9 +26,19 @@ Please login you development board, and change to your working directory. Then, 
    - Sense_Light: Enable Light sensor (1) or Not (0)
    - Sense_Gas: Enable Gas sensor (1) or Not (0)
    
+   - import xxx as pm_sensor: Change xxx to the corresponding module
+   - import xxx as tmp_sensor: Change xxx to the corresponding module
+   - import xxx as light_sensor: Change xxx to the corresponding module
+   - import xxx as gas_sensor: Change xxx to the corresponding module
+   
+   - MQTT settings: including MQTT_broker, MQTT_port, and MQTT_topic
+   
+   - GPS coordinates: including GPS_LAT and GPS_LON
+   
+   - LASS settings: including APP_ID, DEVICE, and DEVICE_ID
 
 3. Run the main program by
    ```
    python AnySense.py
    ```
-4. 
+4. You can check the results on the console printouts or on the MQTT broker.
