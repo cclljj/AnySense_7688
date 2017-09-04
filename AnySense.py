@@ -67,8 +67,8 @@ def upload_data():
 			tq = values[item]
 			tq = tq.replace('"','')
 			msg = msg + "|" + item + "=" + tq 
-	#MQTT = mqtt.mqtt(MQTT_broker,MQTT_port,MQTT_topic + "/" + DEVICE_ID)
-	#MQTT.pub(msg)
+	MQTT = mqtt.mqtt(MQTT_broker,MQTT_port,MQTT_topic + "/" + DEVICE_ID)
+	MQTT.pub(msg)
 	print msg
 	
 
