@@ -24,21 +24,21 @@ Please login you development board, and change to your working directory. Then, 
 
 2. Edit the file AnySense.py and change the configureations
 
-   - Sense_PM: Enable PM sensor (1) or Not (0)
-   - Sense_Tmp: Enable Temperature/Humidity sensor (1) or Not (0)
-   - Sense_Light: Enable Light sensor (1) or Not (0)
-   - Sense_Gas: Enable Gas sensor (1) or Not (0)
+ - Sense_PM: Enable PM sensor (1) or Not (0)
+ - Sense_Tmp: Enable Temperature/Humidity sensor (1) or Not (0)
+ - Sense_Light: Enable Light sensor (1) or Not (0)
+ - Sense_Gas: Enable Gas sensor (1) or Not (0)
    
-   - import xxx as pm_sensor: Change xxx to the corresponding module
-   - import xxx as tmp_sensor: Change xxx to the corresponding module
-   - import xxx as light_sensor: Change xxx to the corresponding module
-   - import xxx as gas_sensor: Change xxx to the corresponding module
+ - import xxx as pm_sensor: Change xxx to the corresponding module
+ - import xxx as tmp_sensor: Change xxx to the corresponding module
+ - import xxx as light_sensor: Change xxx to the corresponding module
+ - import xxx as gas_sensor: Change xxx to the corresponding module
    
-   - MQTT settings: including MQTT_broker, MQTT_port, and MQTT_topic
+ - MQTT settings: including MQTT_broker, MQTT_port, and MQTT_topic
    
-   - GPS coordinates: including GPS_LAT and GPS_LON
+ - GPS coordinates: including GPS_LAT and GPS_LON
    
-   - LASS settings: including APP_ID, DEVICE, and DEVICE_ID
+ - LASS settings: including APP_ID, DEVICE, and DEVICE_ID
 
 3. Run the main program by
 
