@@ -23,6 +23,7 @@ Please login you development board, and change to your working directory. Then, 
    ```
 
 2. Edit the file AnySense.py and change the configureations
+
    - Sense_PM: Enable PM sensor (1) or Not (0)
    - Sense_Tmp: Enable Temperature/Humidity sensor (1) or Not (0)
    - Sense_Light: Enable Light sensor (1) or Not (0)
