@@ -23,17 +23,20 @@ Please login you development board, and change to your working directory. Then, 
    ```
 
 2. Edit the file AnySense_config.py and change the configureations
-   1. Sense_PM: Enable PM sensor (1) or Not (0)
-   2. Sense_Tmp: Enable Temperature/Humidity sensor (1) or Not (0)
-   3. Sense_Light: Enable Light sensor (1) or Not (0)
-   4. Sense_Gas: Enable Gas sensor (1) or Not (0)
-   5. import xxx as pm_sensor: Change xxx to the corresponding module (or leave it unchanged if you don't need a PM sensor)
-   6. import xxx as tmp_sensor: Change xxx to the corresponding module (or leave it unchanged if you don't need a Temperature/Humidity sensor)
-   7. import xxx as light_sensor: Change xxx to the corresponding module (or leave it unchanged if you don't need a light sensor)
-   8. import xxx as gas_sensor: Change xxx to the corresponding module (or leave it unchanged if you don't need a gas sensor)
-   9. GPS coordinates: including GPS_LAT and GPS_LON
-   10. LASS settings: including APP_ID, DEVICE, and DEVICE_ID
-   11. MQTT settings: including MQTT_broker, MQTT_port, MQTT_topic, and MQTT_interval
+   * Sense_PM: Enable PM sensor (1) or Not (0)
+   * Sense_Tmp: Enable Temperature/Humidity sensor (1) or Not (0)
+   * Sense_Light: Enable Light sensor (1) or Not (0)
+   * Sense_Gas: Enable Gas sensor (1) or Not (0)
+   ***
+   * import xxx as pm_sensor: Change xxx to the corresponding module (or leave it unchanged if you don't need a PM sensor)
+   * import xxx as tmp_sensor: Change xxx to the corresponding module (or leave it unchanged if you don't need a Temperature/Humidity sensor)
+   * import xxx as light_sensor: Change xxx to the corresponding module (or leave it unchanged if you don't need a light sensor)
+   * import xxx as gas_sensor: Change xxx to the corresponding module (or leave it unchanged if you don't need a gas sensor)
+   ***
+   * GPS coordinates: including GPS_LAT and GPS_LON
+   * LASS settings: including APP_ID, DEVICE, and DEVICE_ID
+   * MQTT settings: including MQTT_broker, MQTT_port, MQTT_topic, and MQTT_interval
+   
 3. Run the main program by
    ```
    python AnySense.py
