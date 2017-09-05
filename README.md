@@ -36,9 +36,9 @@ Please login you development board, and change to your working directory. Then, 
    11. MQTT settings: including MQTT_broker, MQTT_port, MQTT_topic, and MQTT_interval
 3. Run the main program by
    ```
-   python AnySense.py
+   python AnySense.py
    ```
-   
+
 4. You can check the results on the console printouts or on the MQTT broker.
 
 ## Acknowledgement
