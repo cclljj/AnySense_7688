@@ -19,9 +19,9 @@ Please login you development board, and change to your working directory. Then, 
 
 1. Use the coommand to get the latest version of the codes: 
 
-    ```
-    git clone https://github.com/cclljj/AnySense_7688
-    ```
+   ```
+   git clone https://github.com/cclljj/AnySense_7688
+   ```
 
 2. Edit the file AnySense_config.py and change the configureations
 
@@ -33,21 +33,19 @@ Please login you development board, and change to your working directory. Then, 
   * import xxx as pm_sensor: Change xxx to the corresponding module (or leave it unchanged if you don't need a PM sensor)
   * import xxx as tmp_sensor: Change xxx to the corresponding module (or leave it unchanged if you don't need a Temperature/Humidity sensor)
   * import xxx as light_sensor: Change xxx to the corresponding module (or leave it unchanged if you don't need a light sensor)
-  * import xxx as gas_sensor: Change xxx to the corresponding module (or leave it unchanged if you don't need a gas sensor)
-   
-  * GPS coordinates: including GPS_LAT and GPS_LON
-   
+  * import xxx as gas_sensor: Change xxx to the corresponding module (or leave it unchanged if you don't need a gas sensor)   
+  * GPS coordinates: including GPS_LAT and GPS_LON 
   * LASS settings: including APP_ID, DEVICE, and DEVICE_ID
+  * MQTT settings: including MQTT_broker, MQTT_port, MQTT_topic, and MQTT_interval
 
-  * MQTT settings: including MQTT_broker, MQTT_port, MQTT_topic, and MQTT_interval
- 
 3. Run the main program by
 
-   ```
+   ```
    python AnySense.py
-   ```
+   ```
    
 4. You can check the results on the console printouts or on the MQTT broker.
+
 
 ## Acknowledgement
 
