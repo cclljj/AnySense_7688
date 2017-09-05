@@ -43,7 +43,7 @@ Please login you development board, and change to your working directory. Then, 
    ```
    python AnySense.py
    ```
-   
+
 4. You can check the results on the console printouts or on the MQTT broker.
 
 
