@@ -44,6 +44,10 @@ Please login you development board, and change to your working directory. Then, 
 
 4. You can check the results on the console printouts or on the MQTT broker.
 
+## Applications
+
+The existing applications (so far) are listed on the [wiki](https://github.com/cclljj/AnySense_7688/wiki) page
+
 ## Acknowledgement
 
 The project was inspired by Spark Lee's Linkit7688_PM2.5 project (https://github.com/future/Linkit7688_PM2.5). We also thank Ming-Wei Cheng (a.k.a. A-Hai) for his technical advices and anonymous users for their valueable feedbacks.
