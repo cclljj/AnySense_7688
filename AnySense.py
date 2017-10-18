@@ -26,7 +26,7 @@ def upload_data():
 			tq = tq.replace('"','')
 			msg = msg + "|" + item + "=" + tq 
 	MQTT = mqtt.mqtt(AnySense_config.MQTT_broker,AnySense_config.MQTT_port,AnySense_config.MQTT_topic + "/" + AnySense_config.DEVICE_ID)
-	MQTT.pub(msg)
+	#MQTT.pub(msg)
 	print msg
 
 if __name__ == '__main__':
