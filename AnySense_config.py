@@ -1,12 +1,12 @@
 import pm_g5t as pm_sensor
 import th_htu21d as tmp_sensor
 import light_bh1750fvi as light_sensor
-import co2_s8 as gas_sensor
+import tvoc_sgp30 as gas_sensor
 
 Sense_PM = 1                          
 Sense_Tmp = 0
 Sense_Light = 0
-Sense_Gas = 0  
+Sense_Gas = 1
 
 GPS_LAT = 25.1933
 GPS_LON = 121.7870
@@ -36,6 +36,7 @@ pm_q = Queue()
 tmp_q = Queue()                                                                                                                     
 light_q = Queue()                                                                                                                   
 gas_q = Queue()  
+tvoc_q = Queue()
 
 fields ={       "Tmp"   :       "s_t0",           
                 "RH"    :       "s_h0",           
@@ -44,6 +45,7 @@ fields ={       "Tmp"   :       "s_t0",
                 "PM10"  :       "s_d1",              
                 "Lux"   :       "s_l0",              
                 "CO2"   :       "s_g8",              
+		"TVOC"	:	"s_gg",
         }                                            
 values = {      "app"           :       APP_ID,      
                 "device_id"     :       DEVICE_ID,                  
