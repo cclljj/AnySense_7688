@@ -6,7 +6,7 @@ import os
 from threading import Timer
 from datetime import datetime
 
-import AnySense_config as Conf
+import APP_Harvard_TX_config as Conf
 
 fields = Conf.fields
 values = Conf.values
