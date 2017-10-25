@@ -8,12 +8,12 @@ start()
 {
 
 	sleep 60
-        [ -f /root/AnySense_7688/AnySense.py ] && {
+        [ -f /root/AnySense_7688/APP_Harvard_TX.py ] && {
                 /usr/bin/git --git-dir=/root/AnySense_7688/.git pull origin master
-		/usr/bin/python /root/AnySense_7688/AnySense.py &
+		/usr/bin/python /root/AnySense_7688/APP_Harvard_TX.py &
         } || {
                 /usr/bin/git clone https://github.com/cclljj/AnySense_7688 /root/AnySense_7688
-		/usr/bin/python /root/AnySense_7688/AnySense.py &
+		/usr/bin/python /root/AnySense_7688/APP_Harvard_TX.py &
         }
 
 
@@ -21,7 +21,7 @@ start()
 
 stop()
 {
-        [ -f /root/AnySense_7688/AnySense.py ] && {
+        [ -f /root/AnySense_7688/APP_Harvard_TX.py ] && {
 		rm -rf /root/AnySense_7688
 	}
 }
