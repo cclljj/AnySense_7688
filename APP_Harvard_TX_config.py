@@ -21,6 +21,8 @@ MQTT_interval = 5			# interval between every two MQTT messages (seconds)
 
 Reboot_Time = 86400			# interval to reboot (seconds); 0 for no-rebooting
 
+SD = "/mnt/mmcblk0p1"
+
 #################################
 # don't make any changes in the following codes
 
