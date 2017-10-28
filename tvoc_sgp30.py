@@ -20,7 +20,7 @@ class sensor(Process):
 		self.sensor.write(self.IAQInitCmd)
 		time.sleep(0.5)
 
-		tvoc_ppb, co2_eq_ppm = self.getIAQMeasure()
+		co2_eq_ppm, tvoc_ppb = self.getIAQMeasure()
 		send_data = {
 			'TVOC'	: tvoc_ppb,
 			'CO2'	: co2_eq_ppm
@@ -29,7 +29,7 @@ class sensor(Process):
 
 
 		while True:
-			tvoc_ppb, co2_eq_ppm = self.getIAQMeasure()
+			co2_eq_ppm, tvoc_ppb = self.getIAQMeasure()
 			send_data['TVOC'] = tvoc_ppb
 			send_data['CO2'] = co2_eq_ppm
 		
@@ -45,11 +45,7 @@ class sensor(Process):
 
 		v1 = bdata[0] * 256 + bdata[1]
 		v2 = bdata[3] * 256 + bdata[4]
-		#v1 = bdata[0] 
-		#v2 = bdata[1]
 
-		print v1
-		print v2
 
 		return v1, v2
 

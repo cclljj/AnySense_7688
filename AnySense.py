@@ -30,11 +30,28 @@ def upload_data():
 			msg = msg + "|" + item + "=" + tq 
 	MQTT = mqtt.mqtt(Conf.MQTT_broker,Conf.MQTT_port,Conf.MQTT_topic + "/" + Conf.DEVICE_ID)
 	#MQTT.pub(msg)
+
+	with open(Conf.FS_SD + "/" + values["date"], "a") as f:
+		f.write(msg + "\n")
 	print msg
 
-def display_data(oled):
-	Timer(5, display_data, {oled}).start()
-	print values
+def display_data(disp):
+	Timer(5, display_data, {disp}).start()
+	timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+	pairs = timestamp.split(" ")
+        disp.clear()                                                                       
+        disp.setCursor(0,0)                                                                
+	disp.write("Date: " + pairs[0])
+        disp.setCursor(1,0)                                                                
+	disp.write("Time: " + pairs[1])
+        disp.setCursor(2,0)                                                                
+        disp.write('Temp = %4.2f' % values["s_t0"])                                           
+        disp.setCursor(3,0)                                                                
+        disp.write('rH = %4.2f' % values["s_h0"])
+        disp.setCursor(4,0)                                                                
+        disp.write('PM2.5 = %5d' % values["s_d0"])                                             
+        disp.setCursor(5,0)                                                                
+        disp.write('TVOC = %5d' % values["s_gg"])
 
 def reboot_system():
 	os.system("reboot")
@@ -64,10 +81,12 @@ if __name__ == '__main__':
 	disp.clear()
 
 	upload_data()
-	display_data(disp)
 
-	disp_mode = 1
-	disp_mode_num = 2
+	values["s_d0"] = 0
+	values["s_gg"] = 0
+	values["s_t0"] = 0
+	values["s_h0"] = 0
+	display_data(disp)
 
 	while True:
 		if Conf.Sense_PM==1 and not Conf.pm_q.empty():
@@ -111,17 +130,13 @@ if __name__ == '__main__':
                                 else:                                                                             
                                         values[item] = gas_data[item]                                             
 
-		if disp_mode == 1:
-		        disp.setCursor(1,0)                                                                                
-        		disp.write('D = %6d' % values["s_d0"])                                                             
-        		disp.setCursor(2,0)                                                                                
-        		disp.write('V = %6d' % values["s_gg"]) 
-		elif disp_mode == 2:
-                        disp.setCursor(1,0)                                                                
-                        disp.write('T = %6.2f' % values["s_t0"])                                             
-                        disp.setCursor(2,0)                                                                
-                        disp.write('H = %6.2f' % values["s_h0"])                                             
-		else:
-			print "Error"
-		disp_mode = (disp_mode + 1) % disp_mode_num
-		sleep(5)
+		#disp.clear()                                             
+        	#disp.setCursor(0,0)                                      
+        	#disp.write('PM2.5 = %5d' % values["s_d0"])               
+        	#disp.setCursor(1,0)                                      
+        	#disp.write('TVOC = %5d' % values["s_gg"])                                               
+        	#disp.setCursor(2,0)                                      
+        	#disp.write('Temp = %4.2f' % values["s_t0"])              
+        	#disp.setCursor(3,0)                                      
+        	#disp.write('rH = %4.2f' % values["s_h0"]) 
+		#time.sleep(5)
