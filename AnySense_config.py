@@ -2,6 +2,7 @@ import pm_g5t as pm_sensor
 import th_htu21d as tmp_sensor
 import light_bh1750fvi as light_sensor
 import tvoc_sgp30 as gas_sensor
+import pyupm_i2clcd as upmLCD
 
 Sense_PM = 1                          
 Sense_Tmp = 0
@@ -10,16 +11,18 @@ Sense_Gas = 1
 
 GPS_LAT = 25.1933
 GPS_LON = 121.7870
-APP_ID = "AnySense"
+APP_ID = "AnySense_Harvard_TX"
 DEVICE = "LinkIt Smart 7688"
 DEVICE_ID = "DEVICE_ID1234"
 
 MQTT_broker = 'gpssensor.ddns.net'
 MQTT_port = 1883                  
 MQTT_topic = 'LASS/Test/PM25/AnySense'
-MQTT_interval = 5			# interval between every two MQTT messages (seconds)
+MQTT_interval = 60			# interval between every two MQTT messages (seconds)
 
 Reboot_Time = 86400			# interval to reboot (seconds); 0 for no-rebooting
+
+SD = "/mnt/mmcblk0p1"
 
 #################################
 # don't make any changes in the following codes

@@ -7,6 +7,7 @@ opkg update
 opkg install block-mount kmod-fs-ext4 kmod-usb-storage-extras e2fsprogs fdisk
 mkfs.ext4 /dev/mmcblk0p1
 
+pip install paho-mqtt
 
 block detect > /etc/config/fstab
 echo "	option	enabled	'1'" >> /etc/config/fstab

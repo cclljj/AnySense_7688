@@ -3,9 +3,11 @@ import mqtt
 import time
 import string
 import os
+
 from threading import Timer
 from datetime import datetime
 
+#import APP_Harvard_TX_config as Conf
 import AnySense_config as Conf
 
 fields = Conf.fields
@@ -30,6 +32,10 @@ def upload_data():
 	#MQTT.pub(msg)
 	print msg
 
+def display_data(oled):
+	Timer(5, display_data, {oled}).start()
+	print values
+
 def reboot_system():
 	os.system("reboot")
 
@@ -53,10 +59,20 @@ if __name__ == '__main__':
 		gas_data = '4'
 		gas = Conf.gas_sensor.sensor(Conf.gas_q)
 		gas.start()
+
+	disp = Conf.upmLCD.SSD1306(0, 0x3C)
+	disp.clear()
+
 	upload_data()
+	display_data(disp)
+
+	disp_mode = 1
+	disp_mode_num = 2
+
 	while True:
 		if Conf.Sense_PM==1 and not Conf.pm_q.empty():
-			pm_data = Conf.pm_q.get()
+			while not Conf.pm_q.empty():
+				pm_data = Conf.pm_q.get()
 			for item in pm_data:
 				if item in fields:
 					values[fields[item]] = pm_data[item]
@@ -65,7 +81,8 @@ if __name__ == '__main__':
 				else:
 					values[item] = pm_data[item]
 		if Conf.Sense_Tmp==1 and not Conf.tmp_q.empty():
-			tmp_data = Conf.tmp_q.get()
+			while not Conf.tmp_q.empty():
+				tmp_data = Conf.tmp_q.get()
                         for item in tmp_data:                                                                 
                                 if item in fields:                                                                
                                         values[fields[item]] = tmp_data[item]                                     
@@ -74,7 +91,8 @@ if __name__ == '__main__':
                                 else:                                                                             
                                         values[item] = tmp_data[item]
 		if Conf.Sense_Light==1 and not Conf.light_q.empty():
-			light_data = Conf.light_q.get()
+			while not Conf.light_q.empty(): 
+				light_data = Conf.light_q.get()
                         for item in light_data:                                                                 
                                 if item in fields:                                                                
                                         values[fields[item]] = light_data[item]                                     
@@ -83,7 +101,8 @@ if __name__ == '__main__':
                                 else:                                                                             
                                         values[item] = light_data[item]                                             
 		if Conf.Sense_Gas==1 and not Conf.gas_q.empty():
-			gas_data = Conf.gas_q.get()
+			while not Conf.gas_q.empty():
+				gas_data = Conf.gas_q.get()
                         for item in gas_data:                                                                 
                                 if item in fields:                                                                
                                         values[fields[item]] = gas_data[item]                                     
@@ -91,3 +110,18 @@ if __name__ == '__main__':
 						values[fields[item]] = round(float(values[fields[item]]),2)
                                 else:                                                                             
                                         values[item] = gas_data[item]                                             
+
+		if disp_mode == 1:
+		        disp.setCursor(1,0)                                                                                
+        		disp.write('D = %6d' % values["s_d0"])                                                             
+        		disp.setCursor(2,0)                                                                                
+        		disp.write('V = %6d' % values["s_gg"]) 
+		elif disp_mode == 2:
+                        disp.setCursor(1,0)                                                                
+                        disp.write('T = %6.2f' % values["s_t0"])                                             
+                        disp.setCursor(2,0)                                                                
+                        disp.write('H = %6.2f' % values["s_h0"])                                             
+		else:
+			print "Error"
+		disp_mode = (disp_mode + 1) % disp_mode_num
+		sleep(5)
