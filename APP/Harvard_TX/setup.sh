@@ -4,4 +4,5 @@ chmod 755 /etc/init.d/AnySense
 
 block detect > /etc/config/fstab
 echo "	option	enabled	'1'" >> /etc/config/fstab
+
 reboot
