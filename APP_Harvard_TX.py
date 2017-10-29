@@ -30,6 +30,11 @@ def upload_data():
 	MQTT = mqtt.mqtt(Conf.MQTT_broker,Conf.MQTT_port,Conf.MQTT_topic + "/" + Conf.DEVICE_ID)
 	#MQTT.pub(msg)
 
+	restful_str = "wget -O /tmp/last_upload.log " + Conf.Restful_URL + "topic=" + Conf.APP_ID + "&device_id=" + Conf.DEVICE_ID + "&msg=" + msg
+	os.system(restful_str)
+
+	print restful_str
+
 	with open(Conf.FS_SD + "/" + values["date"], "a") as f:
 		f.write(msg + "\n")
 	print msg
