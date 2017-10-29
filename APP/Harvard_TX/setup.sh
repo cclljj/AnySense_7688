@@ -4,7 +4,7 @@ chmod 755 /etc/init.d/AnySense
 
 
 opkg update
-opkg install block-mount kmod-fs-ext4 kmod-usb-storage-extras e2fsprogs fdisk
+opkg install wget block-mount kmod-fs-ext4 kmod-usb-storage-extras e2fsprogs fdisk
 mkfs.ext4 /dev/mmcblk0p1
 
 pip install paho-mqtt

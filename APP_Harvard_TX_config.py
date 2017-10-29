@@ -11,8 +11,8 @@ Sense_Gas = 1
 
 GPS_LAT = 25.1933
 GPS_LON = 121.7870
-APP_ID = "AnySense_Harvard_TX"
-DEVICE = "LinkIt Smart 7688"
+APP_ID = "Harvard_TX"
+DEVICE = "LinkIt_Smart_7688"
 DEVICE_ID = "DEVICE_ID1234"
 
 MQTT_broker = 'gpssensor.ddns.net'
@@ -21,6 +21,9 @@ MQTT_topic = 'LASS/Test/PM25/AnySense'
 MQTT_interval = 60			# interval between every two MQTT messages (seconds)
 
 Reboot_Time = 86400			# interval to reboot (seconds); 0 for no-rebooting
+
+Restful_URL = "https://data.lass-net.org/Upload/MAPS.php?"
+Restful_interval = 60
 
 FS_SD = "/mnt/mmcblk0p1"
 
