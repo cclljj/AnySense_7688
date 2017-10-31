@@ -146,13 +146,3 @@ if __name__ == '__main__':
                                 else:                                                                             
                                         values[item] = gas_data[item]                                             
 
-		#disp.clear()                                             
-        	#disp.setCursor(0,0)                                      
-        	#disp.write('PM2.5 = %5d' % values["s_d0"])               
-        	#disp.setCursor(1,0)                                      
-        	#disp.write('TVOC = %5d' % values["s_gg"])                                               
-        	#disp.setCursor(2,0)                                      
-        	#disp.write('Temp = %4.2f' % values["s_t0"])              
-        	#disp.setCursor(3,0)                                      
-        	#disp.write('rH = %4.2f' % values["s_h0"]) 
-		#time.sleep(5)
