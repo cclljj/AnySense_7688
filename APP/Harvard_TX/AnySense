@@ -7,7 +7,7 @@ START=99
 start()
 {
 
-	sleep 60
+	sleep 30
         [ -f /root/AnySense_7688/APP_Harvard_TX.py ] && {
                 /usr/bin/git --git-dir=/root/AnySense_7688/.git pull origin master
 		/usr/bin/python /root/AnySense_7688/APP_Harvard_TX.py &>/dev/null
