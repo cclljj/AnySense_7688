@@ -22,9 +22,9 @@ def rtc_set_time(t):
 	rtc = mraa.I2c(0)
         rtc.address(DS3231_I2C_ADDR)
 
-	print t.year, t.month, t.day, t.weekday(), t.hour, t.minute, t.second
 	tyear = t.year
 	tweek = dec2bcd(t.weekday())
+	tweek = t.weekday()
 	tmon = dec2bcd(t.month)
 	tday = dec2bcd(t.day)
 	thour = dec2bcd(t.hour)
@@ -32,15 +32,13 @@ def rtc_set_time(t):
 	tsec = dec2bcd(t.second)
 	tyear_s = dec2bcd(t.year - 2000)
 
-	rtc.writeByte(DS3231_TIME_CAL_ADDR)
-	time.sleep(0.1)
-	rtc.writeByte(tsec)
-	rtc.writeByte(tmin)
-	rtc.writeByte(thour)
-	rtc.writeByte(tweek)
-	rtc.writeByte(tday)
-	rtc.writeByte(tmon)
-	rtc.writeByte(tyear_s)
+	rtc.writeReg(0x00, tsec & 0xff)
+	rtc.writeReg(0x01, tmin & 0xff)
+	rtc.writeReg(0x02, thour & 0xff)
+	rtc.writeReg(0x03, tweek & 0xff)
+	rtc.writeReg(0x04, tday & 0xff)
+	rtc.writeReg(0x05, tmon & 0xff)
+	rtc.writeReg(0x06, tyear_s & 0xff)
 
 
 def rtc_get_time():
@@ -52,7 +50,7 @@ def rtc_get_time():
 	tsec = bcd2dec(rtc.readByte())
 	tmin = bcd2dec(rtc.readByte())
 	thour = bcd2dec(rtc.readByte())
-	tweek = bcd2dec(rtc.readByte())
+	tweek = rtc.readByte()
 	tday = bcd2dec(rtc.readByte())
 	tmon = bcd2dec(rtc.readByte())
 	tyear_s = bcd2dec(rtc.readByte())
@@ -83,17 +81,6 @@ def ntp_is_running():
 
 
 if __name__ == '__main__':
-	t = datetime.strptime("2018-01-02 03:04:05", "%Y-%m-%d %H:%M:%S")
-	rtc_set_time(t)
-
-	t = rtc_get_time()
-	print t.strftime("%Y-%m-%d %H:%M:%S")
-
-	t = datetime.strptime("2019-01-02 03:04:05", "%Y-%m-%d %H:%M:%S")
-	rtc_set_time(t)
-
-	t = rtc_get_time()
-	print t.strftime("%Y-%m-%d %H:%M:%S")
 
 	status, t = ntp_is_running()
 	if status == 1:
