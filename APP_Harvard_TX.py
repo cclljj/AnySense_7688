@@ -1,5 +1,4 @@
 import mraa
-import mqtt
 import time
 import string
 import os
