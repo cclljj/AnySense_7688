@@ -2,6 +2,7 @@ import mraa
 import time
 import string
 import os
+import random
 
 from threading import Timer
 from datetime import datetime
@@ -81,6 +82,8 @@ def ntp_is_running():
 
 if __name__ == '__main__':
 
+	time.sleep(random.random()*10)
+	time.sleep(random.random()*100)
 	status, t = ntp_is_running()
 	if status == 1:
 		rtc_set_time(t)
