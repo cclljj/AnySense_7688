@@ -4,13 +4,13 @@ This is the AnySense project for MediaTek LinkIt 7688 board. The codes will cond
 * Temperature and Humidity Sensor
   * HTU21d (I2C)
   * SHT2x (I2C)
-  * Plantower PMS5003T (UART0)
+  * Plantower PMS5003T (UART0, in together with PM sensing)
 * Light Sensor
   * BH1750FVI (I2C)
 * Particulate Matter Sensor
   * Plantower PMS3003 (UART0)
   * Plantower PMS5003 (UART0)
-  * Plantower PMS5003T (UART0)
+  * Plantower PMS5003T (UART0, in together with T/H sensing)
   * Plantower PMS7003 (UART0)
   * Plantower PMSA003 (UART0)
 * Gas Sensor
