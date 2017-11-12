@@ -24,7 +24,7 @@ Please login you development board, and change to your working directory. Then, 
    git clone https://github.com/cclljj/AnySense_7688
    ```
 
-2. Install phao library by the command
+2. Install phao library by the command (no need if you are using RESTful)
    ```
    pip install paho-mqtt
    ```
