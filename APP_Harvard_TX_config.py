@@ -52,7 +52,7 @@ fields ={       "Tmp"   :       "s_t0",
                 "PM2.5" :       "s_d0",           
                 "PM10"  :       "s_d1",              
                 "Lux"   :       "s_l0",              
-                "CO2"   :       "s_g8",              
+                "CO2"   :       "s_g8e",              
 		"TVOC"	:	"s_gg",
         }                                            
 values = {      "app"           :       APP_ID,      
