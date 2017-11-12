@@ -9,6 +9,7 @@ This is the AnySense project for MediaTek LinkIt 7688 board. The codes will cond
 * Particulate Matter Sensor
   * Plantower PMS3003 (UART0)
   * Plantower PMS5003 (UART0)
+  * Plantower PMS5003T (UART0)
   * Plantower PMS7003 (UART0)
   * Plantower PMSA003 (UART0)
 * Gas Sensor
