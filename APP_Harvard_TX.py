@@ -62,7 +62,7 @@ def display_data(disp):
         disp.setCursor(4,0)                                                                
 	disp.write(empty_str)
         disp.setCursor(4,0)                                                                
-        disp.write('rH = %.2f \%' % values["s_h0"])
+        disp.write('rH = %.2f' % values["s_h0"])
         disp.setCursor(5,0)                                                                
 	disp.write(empty_str)
         disp.setCursor(5,0)                                                                
