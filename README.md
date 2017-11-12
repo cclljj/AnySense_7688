@@ -1,6 +1,6 @@
 This is the AnySense project for MediaTek LinkIt 7688 board. The codes will conduct sensing tasks and report the results to the LASS MQTT broker. The codes are based on MRAA library in Python, so hopefully it will run smoothly on the other MRAA-supported boards.
 
-## Sensors supported
+## Sensors supported (till 2017/11/12)
 * Temperature and Humidity Sensor
   * HTU21d (I2C)
   * SHT2x (I2C)
