@@ -36,7 +36,7 @@ def upload_data():
 
 	with open(Conf.FS_SD + "/" + values["date"], "a") as f:
 		f.write(msg + "\n")
-	print msg
+	#print msg
 
 def display_data(disp):
 	Timer(5, display_data, {disp}).start()
@@ -58,19 +58,19 @@ def display_data(disp):
         disp.setCursor(3,0)                                                                
 	disp.write(empty_str)
         disp.setCursor(3,0)                                                                
-        disp.write('Temp = %.2f C' % values["s_t0"])                                           
+        disp.write('Temp: %.2fC' % values["s_t0"])                                           
         disp.setCursor(4,0)                                                                
 	disp.write(empty_str)
         disp.setCursor(4,0)                                                                
-        disp.write('rH = %.2f' % values["s_h0"])
+        disp.write('rH: %.2f' % values["s_h0"])
         disp.setCursor(5,0)                                                                
 	disp.write(empty_str)
         disp.setCursor(5,0)                                                                
-        disp.write('PM2.5 = %d ug/m3' % values["s_d0"])                                             
+        disp.write('PM2.5: %dug/m3' % values["s_d0"])                                             
         disp.setCursor(6,0)                                                                
 	disp.write(empty_str)
         disp.setCursor(6,0)                                                                
-        disp.write('TVOC = %d ppb' % values["s_gg"])
+        disp.write('TVOC: %dppb' % values["s_gg"])
 
 def reboot_system():
 	os.system("reboot")
