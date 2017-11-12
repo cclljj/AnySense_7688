@@ -13,6 +13,7 @@ This is the AnySense project for MediaTek LinkIt 7688 board. The codes will cond
   * Plantower PMSA003 (UART0)
 * Gas Sensor
   * SenseAir S8 (UART1)
+  * Sensirion SGP30 (I2C)
  
 ## How to run this program?
 Please login you development board, and change to your working directory. Then, please follow the following steps:
