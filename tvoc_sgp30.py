@@ -12,29 +12,29 @@ class sensor(Process):
 
 		self.IAQInitCmd = bytearray(b'\x20\x03')
 		self.IAQMeasureCmd = bytearray(b'\x20\x08')
-		#self.IAQMeasureCmd = bytearray(b'\x20\x32')
-		#self.Tcmd = 0xF3
-		#self.RHcmd = 0xF5
 
 	def run(self):
 		self.sensor.write(self.IAQInitCmd)
 		time.sleep(0.5)
 
-		co2_eq_ppm, tvoc_ppb = self.getIAQMeasure()
-		send_data = {
-			'TVOC'	: tvoc_ppb,
-			'CO2'	: co2_eq_ppm
-		}
-		self.q.put(send_data)
+		err, co2_eq_ppm, tvoc_ppb = self.getIAQMeasure()
+		if err == 0:
+			send_data = {
+				'TVOC'	: tvoc_ppb,
+				'CO2'	: co2_eq_ppm
+			}
+			self.q.put(send_data)
 
+		time.sleep(10)
 
 		while True:
-			co2_eq_ppm, tvoc_ppb = self.getIAQMeasure()
-			send_data['TVOC'] = tvoc_ppb
-			send_data['CO2'] = co2_eq_ppm
-		
-			self.q.put(send_data)
-			time.sleep(5)
+			err, co2_eq_ppm, tvoc_ppb = self.getIAQMeasure()
+			if err == 0:
+				send_data['TVOC'] = tvoc_ppb
+				send_data['CO2'] = co2_eq_ppm
+				self.q.put(send_data)
+	
+			time.sleep(10)
 			
 
         def getIAQMeasure(self):
@@ -43,11 +43,18 @@ class sensor(Process):
                 d = self.sensor.read(6)
 		bdata = bytearray(d)
 
-		v1 = bdata[0] * 256 + bdata[1]
-		v2 = bdata[3] * 256 + bdata[4]
+		err = -1
 
+		try:
+			v1 = bdata[0] * 256 + bdata[1]
+			v2 = bdata[3] * 256 + bdata[4]
+			err = 0
+		except:
+			v1 = -1
+			v2 = -1
+			err = 1
 
-		return v1, v2
+		return err, v1, v2
 
 
 if __name__ == '__main__':
