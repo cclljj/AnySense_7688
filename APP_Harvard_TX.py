@@ -34,7 +34,7 @@ def upload_data():
 
 	print restful_str
 
-	with open(Conf.FS_SD + "/" + values["date"], "a") as f:
+	with open(Conf.FS_SD + "/" + values["date"] + ".txt", "a") as f:
 		f.write(msg + "\n")
 	#print msg
 
