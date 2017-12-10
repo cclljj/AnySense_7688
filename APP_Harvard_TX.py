@@ -1,4 +1,4 @@
-import mraa
+#import mraa
 import time
 import string
 import os
@@ -12,6 +12,8 @@ fields = Conf.fields
 values = Conf.values
 
 def upload_data():
+	CSV_items = ['device_id','date','time','s_t0','s_h0','s_d0','s_d1','s_d2','s_gg','s_g8e']
+
 	Timer(Conf.MQTT_interval,upload_data,()).start()
 	timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
 	pairs = timestamp.split(" ")
@@ -32,7 +34,14 @@ def upload_data():
 	restful_str = "wget -O /tmp/last_upload.log \"" + Conf.Restful_URL + "topic=" + Conf.APP_ID + "&device_id=" + Conf.DEVICE_ID + "&msg=" + msg + "\""
 	os.system(restful_str)
 
-	print restful_str
+	#print restful_str
+
+	msg = ""
+	for item in CSV_items:
+		if item in values:
+			msg = msg + str(values[item]) + '\t'
+		else:
+			msg = msg + "N/A" + '\t'
 
 	with open(Conf.FS_SD + "/" + values["date"] + ".txt", "a") as f:
 		f.write(msg + "\n")
@@ -149,14 +158,4 @@ if __name__ == '__main__':
 						values[fields[item]] = round(float(values[fields[item]]),2)
                                 else:                                                                             
                                         values[item] = gas_data[item]                                             
-
-		#disp.clear()                                             
-        	#disp.setCursor(0,0)                                      
-        	#disp.write('PM2.5 = %5d' % values["s_d0"])               
-        	#disp.setCursor(1,0)                                      
-        	#disp.write('TVOC = %5d' % values["s_gg"])                                               
-        	#disp.setCursor(2,0)                                      
-        	#disp.write('Temp = %4.2f' % values["s_t0"])              
-        	#disp.setCursor(3,0)                                      
-        	#disp.write('rH = %4.2f' % values["s_h0"]) 
-		#time.sleep(5)
+					
