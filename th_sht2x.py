@@ -58,7 +58,7 @@ class sensor(Process):
 
 if __name__ == '__main__':
 
-	q = Queue()
+	q = Queue(maxsize=5)
         sen = sensor(q)
 	sen.start()
 

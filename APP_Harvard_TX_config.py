@@ -40,11 +40,11 @@ num_re_pattern = re.compile("^-?\d+\.\d+$|^-?\d+$")
 mac = str(':'.join(['{:02x}'.format((uuid.getnode() >> i) & 0xff) for i in range(0,8*6,8)][::-1])).upper()
 DEVICE_ID = mac.replace(':','')                                                                           
 
-pm_q = Queue()                                                                                                                     
-tmp_q = Queue()                                                                                                                     
-light_q = Queue()                                                                                                                   
-gas_q = Queue()  
-tvoc_q = Queue()
+pm_q = Queue(maxsize=5)                                                                                                                     
+tmp_q = Queue(maxsize=5)                                                                                                                     
+light_q = Queue(maxsize=5)                                                                                                                   
+gas_q = Queue(maxsize=5)  
+tvoc_q = Queue(maxsize=5)
 
 fields ={       "Tmp"   :       "s_t0",           
                 "RH"    :       "s_h0",           
