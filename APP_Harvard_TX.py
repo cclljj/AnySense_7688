@@ -11,10 +11,11 @@ import APP_Harvard_TX_config as Conf
 fields = Conf.fields
 values = Conf.values
 
-def upload_data():
+def upload_data(reboot_counter):
+	reboot_counter = reboot_counter - 1
 	CSV_items = ['device_id','date','time','s_t0','s_h0','s_d0','s_d1','s_d2','s_gg','s_g8e']
 
-	Timer(Conf.MQTT_interval,upload_data,()).start()
+	Timer(Conf.MQTT_interval,upload_data,[reboot_counter]).start()
 	timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
 	pairs = timestamp.split(" ")
 	values["device_id"] = Conf.DEVICE_ID
@@ -34,8 +35,6 @@ def upload_data():
 	restful_str = "wget -O /tmp/last_upload.log \"" + Conf.Restful_URL + "topic=" + Conf.APP_ID + "&device_id=" + Conf.DEVICE_ID + "&msg=" + msg + "\""
 	os.system(restful_str)
 
-	#print restful_str
-
 	msg = ""
 	for item in CSV_items:
 		if item in values:
@@ -45,7 +44,9 @@ def upload_data():
 
 	with open(Conf.FS_SD + "/" + values["date"] + ".txt", "a") as f:
 		f.write(msg + "\n")
-	#print msg
+
+	if reboot_counter <= 0:
+		os.system("reboot")
 
 def display_data(disp):
 	Timer(5, display_data, {disp}).start()
@@ -86,8 +87,8 @@ def reboot_system():
 	os.system("reboot")
 
 if __name__ == '__main__':
-	if Conf.Reboot_Time > 0:
-		Timer(Conf.Reboot_Time, reboot_system,()).start()
+	#if Conf.Reboot_Time > 0:
+	#	Timer(Conf.Reboot_Time, reboot_system,()).start()
 	if Conf.Sense_PM==1:
 		pm_data = '1'
 		pm = Conf.pm_sensor.sensor(Conf.pm_q)
@@ -109,7 +110,7 @@ if __name__ == '__main__':
 	disp = Conf.upmLCD.SSD1306(0, 0x3C)
 	disp.clear()
 
-	upload_data()
+	upload_data( Conf.Reboot_Time / Conf.MQTT_interval )
 
 	values["s_d0"] = 0
 	values["s_gg"] = 0
