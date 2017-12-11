@@ -44,6 +44,8 @@ class sensor(Process):
 		bdata = bytearray(d)
 
 		err = -1
+		v1 = -2
+		v2 = -2
 
 		try:
 			v1 = bdata[0] * 256 + bdata[1]
