@@ -26,10 +26,10 @@ class sensor(Process):
 
 		while True:
 			send_data['Tmp'] = self.getT()
-			time.sleep(0.3)
+			time.sleep(5)
 			send_data['RH'] = self.getRH()
 			self.q.put(send_data)
-			time.sleep(0.3)
+			time.sleep(5)
 			
 
         def getT(self):

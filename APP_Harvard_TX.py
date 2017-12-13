@@ -159,4 +159,5 @@ if __name__ == '__main__':
 						values[fields[item]] = round(float(values[fields[item]]),2)
                                 else:                                                                             
                                         values[item] = gas_data[item]                                             
+		time.sleep(3)
 					

@@ -96,8 +96,6 @@ class sensor(Process):
 		return ret
 
 	def run(self):
-		count = 0
-
 		while True:
 			if self.u.dataAvailable():
 				time.sleep(0.05)
@@ -106,10 +104,9 @@ class sensor(Process):
 				if len(getstr) == NUM_INCOME_BYTE:
 					self.data_log(getstr)
 
-					if count == 0:
-						g = self.get_data()
-						self.q.put(g)
-					count = (count+1)%10
+					g = self.get_data()
+					self.q.put(g)
+				time.sleep(5)
 					
 
 
