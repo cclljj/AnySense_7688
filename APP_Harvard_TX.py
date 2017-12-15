@@ -3,7 +3,7 @@ import time
 import string
 import os
 
-from threading import Timer
+#from threading import Timer
 from datetime import datetime
 
 import APP_Harvard_TX_config as Conf
@@ -11,11 +11,10 @@ import APP_Harvard_TX_config as Conf
 fields = Conf.fields
 values = Conf.values
 
-def upload_data(reboot_counter):
-	reboot_counter = reboot_counter - 1
+def upload_data():
 	CSV_items = ['device_id','date','time','s_t0','s_h0','s_d0','s_d1','s_d2','s_gg','s_g8e']
 
-	Timer(Conf.MQTT_interval,upload_data,[reboot_counter]).start()
+	#Timer(Conf.MQTT_interval,upload_data,[reboot_counter]).start()
 	timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
 	pairs = timestamp.split(" ")
 	values["device_id"] = Conf.DEVICE_ID
@@ -42,14 +41,15 @@ def upload_data(reboot_counter):
 		else:
 			msg = msg + "N/A" + '\t'
 
-	with open(Conf.FS_SD + "/" + values["date"] + ".txt", "a") as f:
-		f.write(msg + "\n")
-
-	if reboot_counter <= 0:
-		os.system("reboot")
+	f = open(Conf.FS_SD + "/" + values["date"] + ".txt", "a")
+	f.write(msg + "\n")
+	f.close()
+	
+	#with open(Conf.FS_SD + "/" + values["date"] + ".txt", "a") as f:
+	#	f.write(msg + "\n")
 
 def display_data(disp):
-	Timer(5, display_data, {disp}).start()
+	#Timer(5, display_data, {disp}).start()
 	timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
 	pairs = timestamp.split(" ")
 	empty_str = "                    "
@@ -110,15 +110,23 @@ if __name__ == '__main__':
 	disp = Conf.upmLCD.SSD1306(0, 0x3C)
 	disp.clear()
 
-	upload_data( Conf.Reboot_Time / Conf.MQTT_interval )
+	#upload_data( Conf.Reboot_Time / Conf.MQTT_interval )
 
-	values["s_d0"] = 0
-	values["s_gg"] = 0
-	values["s_t0"] = 0
-	values["s_h0"] = 0
-	display_data(disp)
+	#values["s_d0"] = 0
+	#values["s_gg"] = 0
+	#values["s_t0"] = 0
+	#values["s_h0"] = 0
+	#display_data(disp)
 
+	count = 0
 	while True:
+		count = count + 1
+		count = count % 12
+	        values["s_d0"] = 0                                                                                                                                  
+	        values["s_gg"] = 0                                                                                                                                  
+	        values["s_t0"] = 0                                                                                                                                  
+	        values["s_h0"] = 0                                                                                                                                  
+
 		if Conf.Sense_PM==1 and not Conf.pm_q.empty():
 			while not Conf.pm_q.empty():
 				pm_data = Conf.pm_q.get()
@@ -159,5 +167,8 @@ if __name__ == '__main__':
 						values[fields[item]] = round(float(values[fields[item]]),2)
                                 else:                                                                             
                                         values[item] = gas_data[item]                                             
-		time.sleep(3)
+		display_data(disp)
+		if count == 0:
+			upload_data()
+		time.sleep(5)
 					
