@@ -41,12 +41,12 @@ def upload_data():
 		else:
 			msg = msg + "N/A" + '\t'
 
-	f = open(Conf.FS_SD + "/" + values["date"] + ".txt", "a")
-	f.write(msg + "\n")
-	f.close()
+	#f = open(Conf.FS_SD + "/" + values["date"] + ".txt", "a")
+	#f.write(msg + "\n")
+	#f.close()
 	
-	#with open(Conf.FS_SD + "/" + values["date"] + ".txt", "a") as f:
-	#	f.write(msg + "\n")
+	with open(Conf.FS_SD + "/" + values["date"] + ".txt", "a") as f:
+		f.write(msg + "\n")
 
 def display_data(disp):
 	#Timer(5, display_data, {disp}).start()
