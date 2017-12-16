@@ -18,6 +18,7 @@ def upload_data():
 	timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
 	pairs = timestamp.split(" ")
 	values["device_id"] = Conf.DEVICE_ID
+	values["ver_app"] = Conf.Version
 	values["date"] = pairs[0]
 	values["time"] = pairs[1]
 	msg = ""
