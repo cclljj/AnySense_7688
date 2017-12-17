@@ -85,7 +85,7 @@ def display_data(disp):
         disp.write('TVOC: %dppb' % values["s_gg"])
 
 def reboot_system():
-	os.system("reboot")
+	os.system("echo b > /proc/sysrq-trigger")
 
 if __name__ == '__main__':
 	#if Conf.Reboot_Time > 0:
