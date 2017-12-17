@@ -21,6 +21,11 @@ def upload_data():
 	values["ver_app"] = Conf.Version
 	values["date"] = pairs[0]
 	values["time"] = pairs[1]
+	
+	values["tick"] = 0
+	with open('/proc/uptime', 'r') as f:
+		values["tick"] = float(f.readline().split()[0])
+		
 	msg = ""
 	for item in values:
 		if Conf.num_re_pattern.match(str(values[item])):
