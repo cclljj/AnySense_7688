@@ -82,8 +82,8 @@ def ntp_is_running():
 
 if __name__ == '__main__':
 
-	time.sleep(random.random()*10)
-	time.sleep(random.random()*100)
+	time.sleep(random.random()*60)
+	
 	status, t = ntp_is_running()
 	if status == 1:
 		rtc_set_time(t)
