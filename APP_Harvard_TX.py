@@ -58,21 +58,21 @@ def display_data(disp):
 	#disp.write(empty_str)
         #disp.setCursor(0,0)                                                                
 	#disp.write("ID: " + Conf.DEVICE_ID)
-	temp = '{:10}'.format("ID: " + Conf.DEVICE_ID)
+	temp = '{:16}'.format("ID: " + Conf.DEVICE_ID)
 	disp.write(temp)
 	
         disp.setCursor(1,0)                                                                
 	#disp.write(empty_str)
         #disp.setCursor(1,0)                                                                
 	#disp.write("Date: " + pairs[0])
-        temp = '{:10}'.format("Date: " + pairs[0])
+        temp = '{:16}'.format("Date: " + pairs[0])
 	disp.write(temp)
 	
 	disp.setCursor(2,0)                                                                
 	#disp.write(empty_str)
         #disp.setCursor(2,0)                                                                
 	#disp.write("Time: " + pairs[1])
-        temp = '{:10}'.format("Time: " + pairs[1])
+        temp = '{:16}'.format("Time: " + pairs[1])
 	disp.write(temp)
 	
 	disp.setCursor(3,0)                                                                
@@ -80,28 +80,28 @@ def display_data(disp):
         #disp.setCursor(3,0)                                                                
 	temp = (values["s_t0"]*1.8)+32
         #disp.write('Temp: %.2fF' % temp)                                   
-        temp = '{:10}'.format('Temp: %.2fF' % temp)
+        temp = '{:16}'.format('Temp: %.2fF' % temp)
 	disp.write(temp)
 	
 	disp.setCursor(4,0)                                                                
 	disp.write(empty_str)
         ##disp.setCursor(4,0)                                                                
         #disp.write('rH: %.2f%%' % values["s_h0"])
-        temp = '{:10}'.format('rH: %.2f%%' % values["s_h0"])
+        temp = '{:16}'.format('rH: %.2f%%' % values["s_h0"])
 	disp.write(temp)
 	
 	disp.setCursor(5,0)                                                                
 	#disp.write(empty_str)
         #disp.setCursor(5,0)                                                                
         #disp.write('PM2.5: %dug/m3' % values["s_d0"])                                             
-        temp = '{:10}'.format('PM2.5: %dug/m3' % values["s_d0"])
+        temp = '{:16}'.format('PM2.5: %dug/m3' % values["s_d0"])
 	disp.write(temp)
 	
 	disp.setCursor(6,0)                                                                
 	#disp.write(empty_str)
         #disp.setCursor(6,0)                                                                
         #disp.write('TVOC: %dppb' % values["s_gg"])
-	temp = '{:10}'.format('TVOC: %dppb' % values["s_gg"])
+	temp = '{:16}'.format('TVOC: %dppb' % values["s_gg"])
 	disp.write(temp)
 	
 	
