@@ -122,8 +122,6 @@ if __name__ == '__main__':
 
 	count = 0
 	while True:
-		count = count + 1
-		count = count % 12
 	        values["s_d0"] = 0                                                                                                                                  
 	        values["s_gg"] = 0                                                                                                                                  
 	        values["s_t0"] = 0                                                                                                                                  
@@ -172,5 +170,7 @@ if __name__ == '__main__':
 		display_data(disp)
 		if count == 0:
 			upload_data()
+		count = count + 1
+		count = count % 12
 		time.sleep(5)
 					
