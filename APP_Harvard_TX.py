@@ -170,7 +170,9 @@ if __name__ == '__main__':
 		display_data(disp)
 		if count == 0:
 			upload_data()
+			
 		count = count + 1
-		count = count % 12
+		if count >= 12:
+			count = 0
 		time.sleep(5)
 					
