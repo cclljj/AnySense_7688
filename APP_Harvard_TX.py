@@ -41,10 +41,6 @@ def upload_data():
 			msg = msg + str(values[item]) + '\t'
 		else:
 			msg = msg + "N/A" + '\t'
-
-	#f = open(Conf.FS_SD + "/" + values["date"] + ".txt", "a")
-	#f.write(msg + "\n")
-	#f.close()
 	
 	with open(Conf.FS_SD + "/" + values["date"] + ".txt", "a") as f:
 		f.write(msg + "\n")
@@ -53,8 +49,8 @@ def display_data(disp):
 	#Timer(5, display_data, {disp}).start()
 	timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
 	pairs = timestamp.split(" ")
-	empty_str = "                    "
-        disp.setCursor(0,0)
+
+	disp.setCursor(0,0)
 	temp = '{:16}'.format("ID: " + Conf.DEVICE_ID)
 	disp.write(temp)
 	
