@@ -95,7 +95,7 @@ def reboot_system():
 	items = k.split(" ")
 	k = float(items[-1])
 
-	if k>1:
+	if k>1.5:
 		os.system("echo b > /proc/sysrq-trigger")
 
 if __name__ == '__main__':
