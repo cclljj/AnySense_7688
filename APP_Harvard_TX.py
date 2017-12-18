@@ -99,7 +99,6 @@ def reboot_system():
 		os.system("echo b > /proc/sysrq-trigger")
 
 if __name__ == '__main__':
-	reboot_system()
 	#if Conf.Reboot_Time > 0:
 	#	Timer(Conf.Reboot_Time, reboot_system,()).start()
 	if Conf.Sense_PM==1:
@@ -133,6 +132,7 @@ if __name__ == '__main__':
 
 	count = 0
 	while True:
+		reboot_system()
 	        values["s_d0"] = 0                                                                                                                                  
 	        values["s_gg"] = 0                                                                                                                                  
 	        values["s_t0"] = 0                                                                                                                                  
