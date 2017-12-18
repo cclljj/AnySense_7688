@@ -2,6 +2,7 @@
 import time
 import string
 import os
+import subprocess
 
 #from threading import Timer
 from datetime import datetime
@@ -86,9 +87,19 @@ def display_data(disp):
 	
 	
 def reboot_system():
-	os.system("echo b > /proc/sysrq-trigger")
+	process = subprocess.Popen(['uptime'], stdout = subprocess.PIPE)
+	k = process.communicate()[0]
+
+	items = k.split(",")
+	k = items[-3]
+	items = k.split(" ")
+	k = float(items[-1])
+
+	if k>0.8:
+		os.system("echo b > /proc/sysrq-trigger")
 
 if __name__ == '__main__':
+	reboot_system()
 	#if Conf.Reboot_Time > 0:
 	#	Timer(Conf.Reboot_Time, reboot_system,()).start()
 	if Conf.Sense_PM==1:
@@ -168,11 +179,10 @@ if __name__ == '__main__':
                                 else:                                                                             
                                         values[item] = gas_data[item]                                             
 		display_data(disp)
-		if count == 0:
+		if count == 6:
 			upload_data()
 			
 		count = count + 1
-		if count >= 12:
-			count = 0
+		count = count % 12
 		time.sleep(5)
 					
