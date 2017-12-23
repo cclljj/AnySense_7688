@@ -169,6 +169,8 @@ if __name__ == '__main__':
 			upload_data()
 			
 		count = count + 1
-		count = count % 300
-		time.sleep(5)
+		count = count % (Conf.Interval_Upload / Conf.Interval_LCD)
+		time.sleep(Conf.Interval_LCD)
+		
+
 					
