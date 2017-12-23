@@ -183,6 +183,6 @@ if __name__ == '__main__':
 			upload_data()
 			
 		count = count + 1
-		count = count % 12
+		count = count % 300
 		time.sleep(5)
 					
