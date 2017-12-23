@@ -4,7 +4,6 @@ import string
 import os
 import subprocess
 
-#from threading import Timer
 from datetime import datetime
 
 import APP_Harvard_TX_config as Conf
@@ -15,7 +14,6 @@ values = Conf.values
 def upload_data():
 	CSV_items = ['device_id','date','time','s_t0','s_h0','s_d0','s_d1','s_d2','s_gg','s_g8e']
 
-	#Timer(Conf.MQTT_interval,upload_data,[reboot_counter]).start()
 	timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
 	pairs = timestamp.split(" ")
 	values["device_id"] = Conf.DEVICE_ID
@@ -35,8 +33,6 @@ def upload_data():
 			tq = values[item]
 			tq = tq.replace('"','')
 			msg = msg + "|" + item + "=" + tq 
-	#MQTT = mqtt.mqtt(Conf.MQTT_broker,Conf.MQTT_port,Conf.MQTT_topic + "/" + Conf.DEVICE_ID)
-	#MQTT.pub(msg)
 
 	restful_str = "wget -O /tmp/last_upload.log \"" + Conf.Restful_URL + "topic=" + Conf.APP_ID + "&device_id=" + Conf.DEVICE_ID + "&msg=" + msg + "\""
 	os.system(restful_str)
@@ -99,8 +95,6 @@ def reboot_system():
 		os.system("echo b > /proc/sysrq-trigger")
 
 if __name__ == '__main__':
-	#if Conf.Reboot_Time > 0:
-	#	Timer(Conf.Reboot_Time, reboot_system,()).start()
 	if Conf.Sense_PM==1:
 		pm_data = '1'
 		pm = Conf.pm_sensor.sensor(Conf.pm_q)
@@ -121,14 +115,6 @@ if __name__ == '__main__':
 
 	disp = Conf.upmLCD.SSD1306(0, 0x3C)
 	disp.clear()
-
-	#upload_data( Conf.Reboot_Time / Conf.MQTT_interval )
-
-	#values["s_d0"] = 0
-	#values["s_gg"] = 0
-	#values["s_t0"] = 0
-	#values["s_h0"] = 0
-	#display_data(disp)
 
 	count = 0
 	while True:
