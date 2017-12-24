@@ -88,19 +88,17 @@ class sensor(Process):
 		if self.Initialised == 0:
 			return -1, -1, -1, -1
 
-                #self.sensor.writeByte(TCS34725_COMMAND_BIT | TCS34725_CDATAL)
-	        #d = self.sensor.read(2)
-		#bdata = bytearray(d)
+                self.sensor.writeByte(TCS34725_COMMAND_BIT | TCS34725_CDATAL)
+	        d = self.sensor.read(2)
+		bdata = bytearray(d)
+		#bdata = self.sensor.readBytesReg(TCS34725_COMMAND_BIT |TCS34725_CDATAL,2)
 		#C = ((bdata[0]<<8) | (bdata[1]))
 
-		bdata = self.sensor.readBytesReg(TCS34725_CDATAL,2)
-		C = ((bdata[0]<<8) | (bdata[1]))
 
-
-                #self.sensor.writeByte(TCS34725_COMMAND_BIT | TCS34725_RDATAL)                                        
-                #d = self.sensor.read(2)                                                                      
-                #bdata = bytearray(d)                                                                         
-		bdata = self.sensor.readBytesReg(TCS34725_RDATAL,2)
+                self.sensor.writeByte(TCS34725_COMMAND_BIT | TCS34725_RDATAL)                                        
+                d = self.sensor.read(2)                                                                      
+                bdata = bytearray(d)                                                                         
+		#bdata = self.sensor.readBytesReg(TCS34725_COMMAND_BIT |TCS34725_RDATAL,2)
                 R = ((bdata[0]<<8) | (bdata[1]))                                                             
 
                 self.sensor.writeByte(TCS34725_COMMAND_BIT | TCS34725_GDATAL)
