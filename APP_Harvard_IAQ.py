@@ -6,13 +6,13 @@ import subprocess
 
 from datetime import datetime
 
-import APP_Harvard_TX_config as Conf
+import APP_Harvard_IAQ_config as Conf
 
 fields = Conf.fields
 values = Conf.values
 
 def upload_data():
-	CSV_items = ['device_id','date','time','s_t0','s_h0','s_d0','s_d1','s_d2','s_gg','s_g8e']
+	CSV_items = ['device_id','date','time','s_t0','s_h0','s_d0','s_d1','s_d2','s_lr','s_lg','s_lb','s_lc']
 
 	timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
 	pairs = timestamp.split(" ")
@@ -34,8 +34,8 @@ def upload_data():
 			tq = tq.replace('"','')
 			msg = msg + "|" + item + "=" + tq 
 
-	restful_str = "wget -O /tmp/last_upload.log \"" + Conf.Restful_URL + "topic=" + Conf.APP_ID + "&device_id=" + Conf.DEVICE_ID + "&msg=" + msg + "\""
-	os.system(restful_str)
+	#restful_str = "wget -O /tmp/last_upload.log \"" + Conf.Restful_URL + "topic=" + Conf.APP_ID + "&device_id=" + Conf.DEVICE_ID + "&msg=" + msg + "\""
+	#os.system(restful_str)
 
 	msg = ""
 	for item in CSV_items:
@@ -46,6 +46,7 @@ def upload_data():
 	
 	with open(Conf.FS_SD + "/" + values["date"] + ".txt", "a") as f:
 		f.write(msg + "\n")
+	print msg
 
 def display_data(disp):
 	#Timer(5, display_data, {disp}).start()
@@ -117,12 +118,17 @@ if __name__ == '__main__':
 	disp.clear()
 
 	count = 0
+
+	values["s_d0"] = 0
+	values["s_d1"] = 0
+	values["s_t0"] = 0
+	values["s_h0"] = 0
+	values["s_lr"] = 0
+	values["s_lg"] = 0
+	values["s_lb"] = 0
+	values["s_lc"] = 0
 	while True:
 		reboot_system()
-	        values["s_d0"] = 0                                                                                                                                  
-	        values["s_gg"] = 0                                                                                                                                  
-	        values["s_t0"] = 0                                                                                                                                  
-	        values["s_h0"] = 0                                                                                                                                  
 
 		if Conf.Sense_PM==1 and not Conf.pm_q.empty():
 			while not Conf.pm_q.empty():
@@ -164,8 +170,8 @@ if __name__ == '__main__':
 						values[fields[item]] = round(float(values[fields[item]]),2)
                                 else:                                                                             
                                         values[item] = gas_data[item]                                             
-		display_data(disp)
-		if count == 6:
+		#display_data(disp)
+		if count == 0:
 			upload_data()
 			
 		count = count + 1

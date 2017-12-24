@@ -117,12 +117,14 @@ if __name__ == '__main__':
 	disp.clear()
 
 	count = 0
+        values["s_d0"] = 0                                                                                                                                  
+        values["s_d1"] = 0                                                                                                                                  
+        values["s_gg"] = 0                                                                                                                                  
+        values["s_g8e"] = 0                                                                                                                                  
+        values["s_t0"] = 0                                                                                                                                  
+        values["s_h0"] = 0                                                                                                                                  
 	while True:
 		reboot_system()
-	        values["s_d0"] = 0                                                                                                                                  
-	        values["s_gg"] = 0                                                                                                                                  
-	        values["s_t0"] = 0                                                                                                                                  
-	        values["s_h0"] = 0                                                                                                                                  
 
 		if Conf.Sense_PM==1 and not Conf.pm_q.empty():
 			while not Conf.pm_q.empty():

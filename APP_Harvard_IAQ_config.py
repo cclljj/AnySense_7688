@@ -1,6 +1,6 @@
 import pm_g5t as pm_sensor
 import th_htu21d as tmp_sensor
-import light_bh1750fvi as light_sensor
+import light_tcs34725 as light_sensor
 import tvoc_sgp30 as gas_sensor
 import pyupm_i2clcd as upmLCD
 
@@ -8,12 +8,12 @@ Version = 0.3
 
 Sense_PM = 1                          
 Sense_Tmp = 0
-Sense_Light = 0
-Sense_Gas = 1
+Sense_Light = 1
+Sense_Gas = 0
 
 GPS_LAT = 25.1933
 GPS_LON = 121.7870
-APP_ID = "Harvard_TX"
+APP_ID = "Harvard_IAQ"
 DEVICE = "LinkIt_Smart_7688"
 DEVICE_ID = "DEVICE_ID1234"
 
@@ -53,6 +53,7 @@ fields ={       "Tmp"   :       "s_t0",
 		"RGB_R"	:	"s_lr",
 		"RGB_G"	:	"s_lg",
 		"RGB_B"	:	"s_lb",
+		"RGB_C"	:	"s_lc",
                 "CO2"   :       "s_g8e",              
 		"TVOC"	:	"s_gg",
         }                                            

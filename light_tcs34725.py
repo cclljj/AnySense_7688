@@ -2,9 +2,14 @@ import mraa
 import time
 from multiprocessing import Queue,Process
 
-TCS34725_ADDRESS = 0x29
-TCS34725_ID = 0x12			# 0x44 = TCS34721/TCS34725, 0x4D = TCS34723/TCS34727
-TCS34725_COMMAND_BIT = 0x80
+TCS34725_ADDRESS 	= 0x29
+TCS34725_ID 		= 0x12	# 0x44 = TCS34721/TCS34725, 0x4D = TCS34723/TCS34727
+TCS34725_COMMAND_BIT 	= 0x80
+TCS34725_ENABLE 	= 0x00
+TCS34725_ATIME		= 0x01	# Integration time
+TCS34725_CONTROL	= 0x0F	# Set the gain level for the sensor
+TCS34725_ENABLE_PON	= 0x01	# Power on - Writing 1 activates the internal oscillator, 0 disables it
+TCS34725_ENABLE_AEN	= 0x02	# RGBC Enable - Writing 1 actives the ADC, 0 disables it
 
 #TCS34725_INTEGRATIONTIME = 0xFF  # /**<  2.4ms - 1 cycle    - Max Count: 1024  */
 #TCS34725_INTEGRATIONTIME = 0xF6  # /**<  24ms  - 10 cycles  - Max Count: 10240 */
@@ -18,6 +23,14 @@ TCS34725_GAIN = 0x01    #/**<  4x gain  */   => default
 #TCS34725_GAIN = 0x02    #/**<  16x gain */
 #TCS34725_GAIN = 0x03    #/**<  60x gain */
 
+TCS34725_CDATAL	= 0x14	# Clear channel data
+TCS34725_CDATAH = 0x15
+TCS34725_RDATAL = 0x16	# Red channel data
+TCS34725_RDATAH = 0x17
+TCS34725_GDATAL = 0x18	# Green channel data
+TCS34725_GDATAH = 0x19
+TCS34725_BDATAL = 0x1A	# Blue channel data
+TCS34725_BDATAH = 0x1B
 
 class sensor(Process):
 
@@ -37,11 +50,14 @@ class sensor(Process):
 			self.Initialised = 1
 
 			self.sensor.writeByte(TCS34725_COMMAND_BIT | TCS34725_ID)
-write8(TCS34725_ATIME, _tcs34725IntegrationTime)
-write8(TCS34725_CONTROL, _tcs34725Gain)
-  write8(TCS34725_ENABLE, TCS34725_ENABLE_PON);
-  delay(3);
-  write8(TCS34725_ENABLE, TCS34725_ENABLE_PON | TCS34725_ENABLE_AEN);		
+			time.sleep(0.01)
+			self.sensor.writeByte(TCS34725_ATIME | TCS34725_INTEGRATIONTIME)
+			time.sleep(0.01)
+			self.sensor.writeByte(TCS34725_CONTROL | TCS34725_GAIN)
+			time.sleep(0.01)
+			self.sensor.writeByte(TCS34725_ENABLE | TCS34725_ENABLE_PON)
+			time.sleep(0.01)
+			self.sensor.writeByte(TCS34725_ENABLE | ( TCS34725_ENABLE_PON | TCS34725_ENABLE_AEN))		
 
 	def run(self):
 		R, G, B, C = self.getRGBC()
@@ -69,20 +85,44 @@ write8(TCS34725_CONTROL, _tcs34725Gain)
 			
 
         def getRGBC(self):
-		
+		if self.Initialised == 0:
+			return -1, -1, -1, -1
 
-		self.sensor.writeByte(0)  # make sure device is in a clean state
-		self.sensor.writeByte(1)  # power up
-		self.sensor.writeByte(mode)  # set measurement mode
-		time.sleep(DELAY_LMODE if mode == OP_SINGLE_LRES else DELAY_HMODE)
-
-                d = self.sensor.read(2)
+                self.sensor.writeByte(TCS34725_COMMAND_BIT | TCS34725_CDATAL)
+	        d = self.sensor.read(2)
 		bdata = bytearray(d)
-		
-		L = ((bdata[0]<<24) | (bdata[1]<<16)) // 78642
-		self.sensor.writeByte(0)  # power again
+		C = ((bdata[0]<<8) | (bdata[1]))
 
-		return L
+                self.sensor.writeByte(TCS34725_COMMAND_BIT | TCS34725_RDATAL)                                        
+                d = self.sensor.read(2)                                                                      
+                bdata = bytearray(d)                                                                         
+                R = ((bdata[0]<<8) | (bdata[1]))                                                             
+
+                self.sensor.writeByte(TCS34725_COMMAND_BIT | TCS34725_GDATAL)
+                d = self.sensor.read(2)                                                                      
+                bdata = bytearray(d)                                                                         
+                G = ((bdata[0]<<8) | (bdata[1]))                                                             
+
+                self.sensor.writeByte(TCS34725_COMMAND_BIT | TCS34725_BDATAL) 
+                d = self.sensor.read(2)                                                                      
+                bdata = bytearray(d)                                                                         
+                B = ((bdata[0]<<8) | (bdata[1]))                                                             
+
+		if TCS34725_INTEGRATIONTIME == 0xFF:
+			time.sleep(0.003)
+		elif TCS34725_INTEGRATIONTIME == 0xF6:
+			time.sleep(0.024)
+		elif TCS34725_INTEGRATIONTIME == 0xEB:
+			time.sleep(0.050)
+		elif TCS34725_INTEGRATIONTIME == 0xD5:
+			time.sleep(0.101)
+		elif TCS34725_INTEGRATIONTIME == 0xC0:
+			time.sleep(0.154)
+		elif TCS34725_INTEGRATIONTIME == 0x00:
+			time.sleep(0.704)
+		else:
+			time.sleep(1)
+		return R, G, B, C
 
 
 if __name__ == '__main__':
