@@ -37,7 +37,8 @@ from multiprocessing import Queue
 float_re_pattern = re.compile("^-?\d+\.\d+$")                                                                                               
 num_re_pattern = re.compile("^-?\d+\.\d+$|^-?\d+$")
 
-mac = str(':'.join(['{:02x}'.format((uuid.getnode() >> i) & 0xff) for i in range(0,8*6,8)][::-1])).upper()
+#mac = str(':'.join(['{:02x}'.format((uuid.getnode() >> i) & 0xff) for i in range(0,8*6,8)][::-1])).upper()
+mac = open('/sys/class/net/eth0/address').readline().upper().strip()
 DEVICE_ID = mac.replace(':','')                                                                           
 
 pm_q = Queue(maxsize=5)                                                                                                                     
@@ -54,7 +55,7 @@ fields ={       "Tmp"   :       "s_t0",
                 "Lux"   :       "s_l0",              
                 "CO2"   :       "s_g8e",              
 		"TVOC"	:	"s_gg",
-        }                                            
+        }                                           
 values = {      "app"           :       APP_ID,      
                 "device_id"     :       DEVICE_ID,                  
                 "device"        :       DEVICE,                     
