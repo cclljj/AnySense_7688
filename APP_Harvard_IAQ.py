@@ -46,7 +46,6 @@ def upload_data():
 	
 	with open(Conf.FS_SD + "/" + values["date"] + ".txt", "a") as f:
 		f.write(msg + "\n")
-	print msg
 
 def display_data(disp):
 	#Timer(5, display_data, {disp}).start()
