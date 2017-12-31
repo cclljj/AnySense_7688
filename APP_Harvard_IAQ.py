@@ -121,12 +121,14 @@ if __name__ == '__main__':
 
 	values["s_d0"] = 0
 	values["s_d1"] = 0
+	values["s_d2"] = 0
 	values["s_t0"] = 0
 	values["s_h0"] = 0
-	values["s_lr"] = 0
-	values["s_lg"] = 0
-	values["s_lb"] = 0
-	values["s_lc"] = 0
+	values["s_lr"] = -1
+	values["s_lg"] = -1
+	values["s_lb"] = -1
+	values["s_lc"] = -1
+	values["s_l0"] = -1
 	while True:
 		reboot_system()
 

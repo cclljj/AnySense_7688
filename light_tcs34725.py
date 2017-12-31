@@ -6,17 +6,18 @@ TCS34725_ADDRESS 	= 0x29
 TCS34725_ID 		= 0x12	# 0x44 = TCS34721/TCS34725, 0x4D = TCS34723/TCS34727
 TCS34725_COMMAND_BIT 	= 0x80
 TCS34725_ENABLE 	= 0x00
-TCS34725_ATIME		= 0x01	# Integration time
-TCS34725_CONTROL	= 0x0F	# Set the gain level for the sensor
 TCS34725_ENABLE_PON	= 0x01	# Power on - Writing 1 activates the internal oscillator, 0 disables it
 TCS34725_ENABLE_AEN	= 0x02	# RGBC Enable - Writing 1 actives the ADC, 0 disables it
+TCS34725_ENABLE_AIEN	= 0x10	# RGBC Interrupt Enable 
+TCS34725_CONTROL	= 0x0F	# Set the gain level for the sensor
+TCS34725_ATIME		= 0x01	# Integration time
 
-TCS34725_INTEGRATIONTIME = 0xFF  # /**<  2.4ms - 1 cycle    - Max Count: 1024  */
+#TCS34725_INTEGRATIONTIME = 0xFF  # /**<  2.4ms - 1 cycle    - Max Count: 1024  */
 #TCS34725_INTEGRATIONTIME = 0xF6  # /**<  24ms  - 10 cycles  - Max Count: 10240 */
 #TCS34725_INTEGRATIONTIME = 0xEB   #/**<  50ms  - 20 cycles  - Max Count: 20480 */   => default
 #TCS34725_INTEGRATIONTIME = 0xD5  # /**<  101ms - 42 cycles  - Max Count: 43008 */
 #TCS34725_INTEGRATIONTIME = 0xC0  # /**<  154ms - 64 cycles  - Max Count: 65535 */
-#TCS34725_INTEGRATIONTIME = 0x00  #  /**<  700ms - 256 cycles - Max Count: 65535 */
+TCS34725_INTEGRATIONTIME = 0x00  #  /**<  700ms - 256 cycles - Max Count: 65535 */
 
 TCS34725_GAIN = 0x00    #/**<  No gain  */
 #TCS34725_GAIN = 0x01    #/**<  4x gain  */   => default
@@ -44,20 +45,27 @@ class sensor(Process):
                 self.sensor.address(TCS34725_ADDRESS)
 
 		self.sensor.writeByte(TCS34725_COMMAND_BIT | TCS34725_ID)
-                d = self.sensor.read(1)
-		bdata = bytearray(d)
-		d = bdata[0]
+                #d = self.sensor.read(1)
+		#bdata = bytearray(d)
+		#d = bdata[0]
+                d = self.sensor.readByte()
 
 		if d!= 0x44 and d!= 0x10:
 			self.Initialised = 0
 		else:
 			self.Initialised = 1
 
-			self.sensor.writeByte(TCS34725_ATIME | TCS34725_INTEGRATIONTIME)
-			self.sensor.writeByte(TCS34725_CONTROL | TCS34725_GAIN)
-			self.sensor.writeByte(TCS34725_ENABLE | TCS34725_ENABLE_PON)
+			self.sensor.writeByte(TCS34725_COMMAND_BIT | TCS34725_ATIME)
+			self.sensor.writeByte(0xff & TCS34725_INTEGRATIONTIME)
+
+			self.sensor.writeByte(TCS34725_COMMAND_BIT | TCS34725_CONTROL)
+			self.sensor.writeByte(0xff & TCS34725_GAIN)
+
+			self.sensor.writeByte(TCS34725_COMMAND_BIT | TCS34725_ENABLE)
+			self.sensor.writeByte(0xff & TCS34725_ENABLE_PON)
 			time.sleep(0.01)
-			self.sensor.writeByte(TCS34725_ENABLE | ( TCS34725_ENABLE_PON | TCS34725_ENABLE_AEN))		
+			self.sensor.writeByte(TCS34725_COMMAND_BIT | TCS34725_ENABLE)		
+			self.sensor.writeByte(0xff & ( TCS34725_ENABLE_PON | TCS34725_ENABLE_AEN))		
 
 	def run(self):
 		R, G, B, C, L = self.getRGBC()
@@ -69,6 +77,7 @@ class sensor(Process):
 			'RGB_C':C,
 		}
 		self.q.put(send_data)
+		time.sleep(5)
 
 
 		while True:
@@ -85,36 +94,48 @@ class sensor(Process):
 			
 
         def getRGBC(self):
+
 		if self.Initialised == 0:
-			return -1, -1, -1, -1
+			return -1, -1, -1, -1, -1
+
+		# set Interrupt False
+                #self.sensor.writeByte(TCS34725_COMMAND_BIT | TCS34725_ENABLE)
+		#r = self.sensor.readByte()
+		#r = r & ~TCS34725_ENABLE_AIEN
+		#self.sensor.writeByte(TCS34725_ENABLE | r)
+		#self.sensor.writeByte(0xff & r)
+		#time.sleep(0.06)
 
                 self.sensor.writeByte(TCS34725_COMMAND_BIT | TCS34725_CDATAL)
 	        d = self.sensor.read(2)
 		bdata = bytearray(d)
-		#bdata = self.sensor.readBytesReg(TCS34725_COMMAND_BIT |TCS34725_CDATAL,2)
-		#C = ((bdata[0]<<8) | (bdata[1]))
-
+		C = ((bdata[0]<<8) | (bdata[1]))
 
                 self.sensor.writeByte(TCS34725_COMMAND_BIT | TCS34725_RDATAL)                                        
                 d = self.sensor.read(2)                                                                      
                 bdata = bytearray(d)                                                                         
-		#bdata = self.sensor.readBytesReg(TCS34725_COMMAND_BIT |TCS34725_RDATAL,2)
                 R = ((bdata[0]<<8) | (bdata[1]))                                                             
 
                 self.sensor.writeByte(TCS34725_COMMAND_BIT | TCS34725_GDATAL)
                 d = self.sensor.read(2)                                                                      
                 bdata = bytearray(d)                                                                         
                 G = ((bdata[0]<<8) | (bdata[1]))                                                             
-                G = bdata[0]* 256 + bdata[1]
 
                 self.sensor.writeByte(TCS34725_COMMAND_BIT | TCS34725_BDATAL) 
                 d = self.sensor.read(2)                                                                      
                 bdata = bytearray(d)                                                                         
                 B = ((bdata[0]<<8) | (bdata[1]))                                                             
 
+                # set Interrupt True
+                #self.sensor.writeByte(TCS34725_COMMAND_BIT | TCS34725_ENABLE)
+                #r = self.sensor.readByte()                                   
+                #r = r | TCS34725_ENABLE_AIEN                                                                
+                #self.sensor.writeByte(TCS34725_ENABLE | r)                                             
+                #self.sensor.writeByte(0xff & r)                                         
+ 
 		L = (-0.32466 * R) + (1.57837 * G) + (-0.73191 * B)
 
-		print C, R, G, B, L
+		print R, G, B, C, L
 
 		if TCS34725_INTEGRATIONTIME == 0xFF:
 			time.sleep(0.003)
@@ -127,7 +148,7 @@ class sensor(Process):
 		elif TCS34725_INTEGRATIONTIME == 0xC0:
 			time.sleep(0.154)
 		elif TCS34725_INTEGRATIONTIME == 0x00:
-			time.sleep(0.704)
+			time.sleep(0.700)
 		else:
 			time.sleep(1)
 		return R, G, B, C, L
