@@ -34,8 +34,8 @@ def upload_data():
 			tq = tq.replace('"','')
 			msg = msg + "|" + item + "=" + tq 
 
-	#restful_str = "wget -O /tmp/last_upload.log \"" + Conf.Restful_URL + "topic=" + Conf.APP_ID + "&device_id=" + Conf.DEVICE_ID + "&msg=" + msg + "\""
-	#os.system(restful_str)
+	restful_str = "wget -O /tmp/last_upload.log \"" + Conf.Restful_URL + "topic=" + Conf.APP_ID + "&device_id=" + Conf.DEVICE_ID + "&msg=" + msg + "\""
+	os.system(restful_str)
 
 	msg = ""
 	for item in CSV_items:
@@ -48,7 +48,6 @@ def upload_data():
 		f.write(msg + "\n")
 
 def display_data(disp):
-	#Timer(5, display_data, {disp}).start()
 	timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
 	pairs = timestamp.split(" ")
 
@@ -78,7 +77,7 @@ def display_data(disp):
 	disp.write(temp)
 	
 	disp.setCursor(6,0)                                                                
-	temp = '{:16}'.format('TVOC: %dppb' % values["s_gg"])
+	temp = '{:16}'.format('Light: %dLux' % values["s_l0"])
 	disp.write(temp)
 	
 	
@@ -171,7 +170,7 @@ if __name__ == '__main__':
 						values[fields[item]] = round(float(values[fields[item]]),2)
                                 else:                                                                             
                                         values[item] = gas_data[item]                                             
-		#display_data(disp)
+		display_data(disp)
 		if count == 0:
 			upload_data()
 			

@@ -4,7 +4,7 @@ import light_tcs34725 as light_sensor
 import tvoc_sgp30 as gas_sensor
 import pyupm_i2clcd as upmLCD
 
-Version = 0.3
+Version = 0.1
 
 Sense_PM = 1                          
 Sense_Tmp = 0
@@ -18,7 +18,7 @@ DEVICE = "LinkIt_Smart_7688"
 DEVICE_ID = "DEVICE_ID1234"
 
 Interval_LCD = 5
-Interval_Upload = 10			# 10 seconds
+Interval_Upload = 60			# 60 seconds
 
 Restful_URL = "https://data.lass-net.org/Upload/MAPS.php?"
 Restful_interval = 60
