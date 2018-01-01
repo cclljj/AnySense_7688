@@ -1,15 +1,16 @@
-import pm_g5t as pm_sensor
+import pm_g3 as pm_sensor
 import th_htu21d as tmp_sensor
 import light_tcs34725 as light_sensor
-import tvoc_sgp30 as gas_sensor
+#import tvoc_sgp30 as gas_sensor
+import co2_s8 as gas_sensor
 import pyupm_i2clcd as upmLCD
 
 Version = 0.1
 
 Sense_PM = 1                          
-Sense_Tmp = 0
+Sense_Tmp = 1
 Sense_Light = 1
-Sense_Gas = 0
+Sense_Gas = 1
 
 GPS_LAT = 25.1933
 GPS_LON = 121.7870

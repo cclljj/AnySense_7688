@@ -12,7 +12,7 @@ fields = Conf.fields
 values = Conf.values
 
 def upload_data():
-	CSV_items = ['device_id','date','time','s_t0','s_h0','s_d0','s_d1','s_d2','s_lr','s_lg','s_lb','s_lc', 's_l0']
+	CSV_items = ['device_id','date','time','s_t0','s_h0','s_d0','s_d1','s_d2','s_lr','s_lg','s_lb','s_lc', 's_l0', 's_g8']
 
 	timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
 	pairs = timestamp.split(" ")
@@ -127,6 +127,7 @@ if __name__ == '__main__':
 	values["s_lb"] = -1
 	values["s_lc"] = -1
 	values["s_l0"] = -1
+	values["s_g8"] = 0
 	while True:
 		reboot_system()
 
