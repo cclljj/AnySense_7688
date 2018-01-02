@@ -48,6 +48,7 @@ def upload_data():
 		f.write(msg + "\n")
 
 def display_data(disp):
+	global connection_flag
 	#Timer(5, display_data, {disp}).start()
 	timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
 	pairs = timestamp.split(" ")
@@ -80,6 +81,14 @@ def display_data(disp):
 	disp.setCursor(6,0)                                                                
 	temp = '{:16}'.format('TVOC: %dppb' % values["s_gg"])
 	disp.write(temp)
+
+	disp.setCursor(7,0)
+	temp = '{:16}'.format(Conf.DEVICE_IP)
+	disp.write(temp)
+
+	disp.setCursor(7,15)
+        temp = connection_flag
+        disp.write(temp)
 	
 	
 def reboot_system():
@@ -93,6 +102,13 @@ def reboot_system():
 
 	if k>1.5:
 		os.system("echo b > /proc/sysrq-trigger")
+
+def check_connection():
+	global connection_flag
+	if(os.system('ping www.google.com -q -c 1  > /dev/null')):
+		connection_flag = "X"
+	else:
+		connection_flag = "@"
 
 if __name__ == '__main__':
 	if Conf.Sense_PM==1:
@@ -125,6 +141,7 @@ if __name__ == '__main__':
         values["s_h0"] = 0                                                                                                                                  
 	while True:
 		reboot_system()
+		check_connection()
 
 		if Conf.Sense_PM==1 and not Conf.pm_q.empty():
 			while not Conf.pm_q.empty():
