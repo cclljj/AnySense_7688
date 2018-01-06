@@ -3,6 +3,10 @@ import time
 import string
 import os
 import random
+import sys,getopt
+import hmac
+import hashlib
+import base64
 
 from threading import Timer
 from datetime import datetime
@@ -44,8 +48,9 @@ def rtc_set_time(t):
 def rtc_get_time():
 	rtc = mraa.I2c(0)
         rtc.address(DS3231_I2C_ADDR)
+
 	rtc.writeByte(DS3231_TIME_CAL_ADDR)
-	time.sleep(0.3)
+	time.sleep(0.5)
 
 	tsec = bcd2dec(rtc.readByte())
 	tmin = bcd2dec(rtc.readByte())
@@ -79,11 +84,66 @@ def ntp_is_running():
 	else:
 		return -1, time1
 
+def set_key(key):
+	mac = open('/sys/class/net/eth0/address').readline().upper().strip()
+	DEVICE_ID = mac.replace(':','')
+	dig = hmac.new(key, msg=DEVICE_ID, digestmod=hashlib.sha256).digest()
+	key = base64.b64encode(dig).decode()      # py3k-mode
+	print "key =", key[:7]
+
+	#rtc = mraa.I2c(0)
+        #rtc.address(DS3231_I2C_ADDR)
+	#rtc.writeReg(0x07, ord(key[0]) & 0xff)
+	#rtc.writeReg(0x08, ord(key[1]) & 0xff)
+	#rtc.writeReg(0x09, ord(key[2]) & 0xff)
+	#rtc.writeReg(0x0A, ord(key[3]) & 0xff)
+	#rtc.writeReg(0x0B, ord(key[4]) & 0xff)
+	#rtc.writeReg(0x0C, ord(key[5]) & 0xff)
+	#rtc.writeReg(0x0D, ord(key[6]) & 0xff)
+
+	#rtc.writeByte(DS3231_TIME_CAL_ADDR)                                  
+        #time.sleep(0.3)
+	#rtc.readByte()
+	#rtc.readByte()
+	#rtc.readByte()
+	#rtc.readByte()
+	#rtc.readByte()
+	#rtc.readByte()
+	#rtc.readByte()
+	#print bcd2dec(rtc.readByte())
+	#print bcd2dec(rtc.readByte())
+	#print bcd2dec(rtc.readByte())
+	#print bcd2dec(rtc.readByte())
+	#print bcd2dec(rtc.readByte())
+
+
+def main(argv):
+	Valid_Command = " -k <key> -d <delay>"
+	DELAY = random.random()*60
+
+	try:
+		opts, args = getopt.getopt(argv,"hd:k:",["delay=","key="])
+	except getopt.GetoptError:
+		print str(os.path.basename(__file__)) + Valid_Command
+		sys.exit(2)
+	for opt, arg in opts:
+		if opt == '-h':
+			print str(os.path.basename(__file__)) + Valid_Command
+			sys.exit()
+		elif opt in ("-k", "--key"):
+			set_key(arg)
+		elif opt in ("-d", "--delay"):
+			DELAY = arg
+
+	return DELAY
+
+
 
 if __name__ == '__main__':
-
-	time.sleep(random.random()*60)
+	delay = main(sys.argv[1:])
+	time.sleep(float(delay))
 	
+	#t = rtc_get_time()
 	status, t = ntp_is_running()
 	if status == 1:
 		rtc_set_time(t)
