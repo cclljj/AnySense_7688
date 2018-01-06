@@ -10,6 +10,7 @@ mkfs.ext4 /dev/mmcblk0p1
 block detect > /etc/config/fstab
 echo "	option	enabled	'1'" >> /etc/config/fstab
 
+python /root/AnySense_7688/AnySense_RTC.py -d 0 -k $1
 crontab /root/AnySense_7688/APP/Harvard_IAQ/RTC_cron
 
 reboot
