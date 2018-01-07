@@ -18,10 +18,6 @@ This is the main page for the LASS7688 project. The development of this project 
   * http://www.icshop.com.tw/product_info.php/products_id/12424
 * SD card (optional)
 
-## How to re-install the codes?
-
-Please use the designated account/password to login the system, and remove the existing project source codes:
-
 ## How to install the codes (for new LinkIt Smart 7688 boards)?
 
 Please login you 7688 board, and change the working directory to /root. Then, please follow the following steps:
@@ -36,3 +32,7 @@ Please login you 7688 board, and change the working directory to /root. Then, pl
    ```
 
 Then, the script will install and configure everything. The system will reboot after the installation is done, and hopefully the system will start to upload data to the backend database.
+
+## How to re-install the codes?
+
+Please use the designated account/password to login the system, and remove the existing project source codes:
