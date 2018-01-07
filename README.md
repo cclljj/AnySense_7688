@@ -6,7 +6,7 @@ This is the AnySense project for MediaTek LinkIt 7688 board. The codes will cond
   * SHT2x (I2C)
 * Light Sensor
   * BH1750FVI (I2C)
-  * TCS34725 (I2C)
+  * TCS34725 (I2C)
 * Particulate Matter Sensor
   * Plantower PMS3003 (UART0)
   * Plantower PMS5003 (UART0)
