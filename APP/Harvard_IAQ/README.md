@@ -25,6 +25,6 @@ Please login you 7688 board, and change the working directory to /root. Then, pl
 2. Run the setup script with a secure key, which is required for data uploading to the backend database. Note that the secure key is distributed to the Harvard_IAQ project members in person only. 
    ```
    /root/AnySense_7688/APP/Harvard_IAQ/setup.sh key
-   ```
+   ```
 
 Then, the script will install and configure everything. The system will reboot after the installation is done, and hopefully the system will start to upload data to the backend database.
