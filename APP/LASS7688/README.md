@@ -20,7 +20,7 @@ This is the main page for the LASS7688 project. The development of this project 
 
 ## How to install the codes (for new LinkIt Smart 7688 boards)?
 
-Please login your 7688 board, and change the working directory to /root. Then, please follow the following steps:
+Please login your 7688 board, and switch your 7688 to station mode (note: the other choice is to turn off WiFi and enable Ethernet connection). Then, please change the working directory to /root and follow the following steps:
 
 1. Use the coommand to get the latest version of the codes: 
    ```
