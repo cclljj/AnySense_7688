@@ -4,7 +4,7 @@ This is the main page for the LASS7688 project. The development of this project 
 
 ## Change log
 
-* 2018/1/7: version 0.1 released (use G5T, and support SD storage, OLED, Restful data uploading)
+* 2018/1/7: version 0.1 released (use G5T, and support OTA, SD storage, OLED, restful data uploading)
 
 ## Hardware
 
