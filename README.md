@@ -15,7 +15,7 @@ This is the AnySense project for MediaTek LinkIt 7688 board. The project conduct
   * Plantower PMSA003 (UART0)
 * Gas Sensor
   * SenseAir S8 (UART1)
-  * Sensirion SGP30 (I2C)
+  * Sensirion SGP30 (I2C)
 * RTC: real time clock
   * DS3231 (I2C)
  
