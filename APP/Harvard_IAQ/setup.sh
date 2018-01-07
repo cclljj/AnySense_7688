@@ -1,4 +1,4 @@
-cp /root/AnySense_7688/APP/Harvard_TX/AnySense /etc/init.d
+cp /root/AnySense_7688/APP/Harvard_IAQ/AnySense /etc/init.d
 chmod 755 /etc/init.d/AnySense
 /etc/init.d/AnySense enable
 
