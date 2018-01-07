@@ -19,7 +19,7 @@ DEVICE_ID = "DEVICE_ID1234"
 Interval_LCD = 5
 
 Restful_interval = 60	# 60 seconds
-Restful_URL = "https://data.lass-net.org/Upload/PM25.php?"
+Restful_URL = "https://pm25.lass-net.org/api/v1/upload/"
 
 
 FS_SD = "/mnt/mmcblk0p1"

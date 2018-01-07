@@ -26,7 +26,7 @@ def upload_data():
 			tq = values[item]
 			tq = tq.replace('"','')
 			msg = msg + "|" + item + "=" + tq 
-	restful_str = "wget -O /tmp/last_upload.log \"" + Conf.Restful_URL + "topic=" + Conf.APP_ID + "&device_id=" + Conf.DEVICE_ID + "&msg=" + msg + "\""
+	restful_str = "wget -O /tmp/last_upload.log \"" + Conf.Restful_URL + Conf.APP_ID + "/" + Conf.DEVICE_ID + "/" + msg + "\""
 	os.system(restful_str)
 	msg = ""
 	for item in Conf.CSV_items:
