@@ -24,7 +24,7 @@ start()
 
 stop()
 {
-        [ -f /root/AnySense_7688/APP_Harvard_TX.py ] && {
+        [ -f /root/AnySense_7688/APP_Harvard_IAQ.py ] && {
 		rm -rf /root/AnySense_7688
 	}
 }
