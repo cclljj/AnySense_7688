@@ -5,12 +5,14 @@ import light_tcs34725 as light_sensor
 import co2_s8 as gas_sensor
 import pyupm_i2clcd as upmLCD
 
+
 Version = 0.1
 
 Sense_PM = 1                          
 Sense_Tmp = 1
 Sense_Light = 1
 Sense_Gas = 1
+Use_RTC_DS3231 = 1
 
 GPS_LAT = 25.1933
 GPS_LON = 121.7870
@@ -21,8 +23,10 @@ DEVICE_ID = "DEVICE_ID1234"
 Interval_LCD = 5
 Interval_Upload = 60			# 60 seconds
 
-Restful_URL = "https://data.lass-net.org/Upload/MAPS.php?"
+Restful_URL = "https://data.lass-net.org/Upload/MAPS-secure.php?"
 Restful_interval = 60
+
+SecureKey = "NoKey"
 
 FS_SD = "/mnt/mmcblk0p1"
 
@@ -37,7 +41,19 @@ float_re_pattern = re.compile("^-?\d+\.\d+$")
 num_re_pattern = re.compile("^-?\d+\.\d+$|^-?\d+$")
 
 mac = open('/sys/class/net/eth0/address').readline().upper().strip()
-DEVICE_ID = mac.replace(':','')                                                                           
+DEVICE_ID = mac.replace(':','') 
+
+if Use_RTC_DS3231 == 1:
+	import mraa
+	import hmac
+	import hashlib
+	import base64
+
+	DS3231_I2C_ADDR = 0x68
+	rtc = mraa.I2c(0)
+	rtc.address(DS3231_I2C_ADDR)
+	SecureKey = chr(rtc.readReg(0x07)) + chr(rtc.readReg(0x08)) + chr(rtc.readReg(0x09)) + chr(rtc.readReg(0x0A)) + chr(rtc.readReg(0x0B)) + chr(rtc.readReg(0x0C)) + chr(rtc.readReg(0x0D))
+	print "SecureKey = " , SecureKey
 
 pm_q = Queue(maxsize=5)                                                                                                                     
 tmp_q = Queue(maxsize=5)                                                                                                                     

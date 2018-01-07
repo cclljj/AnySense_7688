@@ -49,16 +49,13 @@ def rtc_get_time():
 	rtc = mraa.I2c(0)
         rtc.address(DS3231_I2C_ADDR)
 
-	rtc.writeByte(DS3231_TIME_CAL_ADDR)
-	time.sleep(0.5)
-
-	tsec = bcd2dec(rtc.readByte())
-	tmin = bcd2dec(rtc.readByte())
-	thour = bcd2dec(rtc.readByte())
-	tweek = rtc.readByte()
-	tday = bcd2dec(rtc.readByte())
-	tmon = bcd2dec(rtc.readByte())
-	tyear_s = bcd2dec(rtc.readByte())
+	tsec = bcd2dec(rtc.readReg(0x00))
+	tmin = bcd2dec(rtc.readReg(0x01))
+	thour = bcd2dec(rtc.readReg(0x02))
+	tweek = rtc.readReg(0x03)
+	tday = bcd2dec(rtc.readReg(0x04))
+	tmon = bcd2dec(rtc.readReg(0x05))
+	tyear_s = bcd2dec(rtc.readReg(0x06))
 	tyear = 2000 + tyear_s
 
 	t = str(tyear) + "-" + str(tmon) + "-" + str(tday) + " " + str(thour) + ":" + str(tmin) + ":" + str(tsec)
@@ -89,32 +86,27 @@ def set_key(key):
 	DEVICE_ID = mac.replace(':','')
 	dig = hmac.new(key, msg=DEVICE_ID, digestmod=hashlib.sha256).digest()
 	key = base64.b64encode(dig).decode()      # py3k-mode
-	print "key =", key[:7]
+	#print "key =", key[:7]
 
-	#rtc = mraa.I2c(0)
-        #rtc.address(DS3231_I2C_ADDR)
-	#rtc.writeReg(0x07, ord(key[0]) & 0xff)
-	#rtc.writeReg(0x08, ord(key[1]) & 0xff)
-	#rtc.writeReg(0x09, ord(key[2]) & 0xff)
-	#rtc.writeReg(0x0A, ord(key[3]) & 0xff)
-	#rtc.writeReg(0x0B, ord(key[4]) & 0xff)
-	#rtc.writeReg(0x0C, ord(key[5]) & 0xff)
-	#rtc.writeReg(0x0D, ord(key[6]) & 0xff)
+	# use the first 7 bytes as the secure key
+	rtc = mraa.I2c(0)
+        rtc.address(DS3231_I2C_ADDR)
+	rtc.writeReg(0x07, ord(key[0]) & 0xff)
+	rtc.writeReg(0x08, ord(key[1]) & 0xff)
+	rtc.writeReg(0x09, ord(key[2]) & 0xff)
+	rtc.writeReg(0x0A, ord(key[3]) & 0xff)
+	rtc.writeReg(0x0B, ord(key[4]) & 0xff)
+	rtc.writeReg(0x0C, ord(key[5]) & 0xff)
+	rtc.writeReg(0x0D, ord(key[6]) & 0xff)
 
-	#rtc.writeByte(DS3231_TIME_CAL_ADDR)                                  
-        #time.sleep(0.3)
-	#rtc.readByte()
-	#rtc.readByte()
-	#rtc.readByte()
-	#rtc.readByte()
-	#rtc.readByte()
-	#rtc.readByte()
-	#rtc.readByte()
-	#print bcd2dec(rtc.readByte())
-	#print bcd2dec(rtc.readByte())
-	#print bcd2dec(rtc.readByte())
-	#print bcd2dec(rtc.readByte())
-	#print bcd2dec(rtc.readByte())
+	# for debug usage: print out the 7 bytes
+	#print chr(rtc.readReg(0x07))
+	#print chr(rtc.readReg(0x08))
+	#print chr(rtc.readReg(0x09))
+	#print chr(rtc.readReg(0x0A))
+	#print chr(rtc.readReg(0x0B))
+	#print chr(rtc.readReg(0x0C))
+	#print chr(rtc.readReg(0x0D))
 
 
 def main(argv):
@@ -143,7 +135,9 @@ if __name__ == '__main__':
 	delay = main(sys.argv[1:])
 	time.sleep(float(delay))
 	
-	#t = rtc_get_time()
+	t = rtc_get_time()
+	print "RTC time: ", t
+
 	status, t = ntp_is_running()
 	if status == 1:
 		rtc_set_time(t)
