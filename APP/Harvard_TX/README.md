@@ -24,7 +24,7 @@ Please login you 7688 board, and change the working directory to /root. Then, pl
    ```
    git clone https://github.com/cclljj/AnySense_7688
    ```
-2. update the values of GPS_LAT and GPS_LON with your GPS coordinates in the file /root/LASS7688/APP_LASS7688_config.py
+2. update the values of GPS_LAT and GPS_LON with your GPS coordinates in the file /root/AnySense_7688/APP_Harvard_TX_config.py
 
 3. Run the setup script:
    ```
