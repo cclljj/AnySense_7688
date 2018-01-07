@@ -18,12 +18,11 @@ DEVICE = "LinkIt_Smart_7688"
 DEVICE_ID = "DEVICE_ID1234"
 
 Interval_LCD = 5
-Interval_Upload = 300			# 300 seconds
 
 Reboot_Time = 86400			# interval to reboot (seconds); 0 for no-rebooti
 
 Restful_URL = "https://data.lass-net.org/Upload/MAPS.php?"
-Restful_interval = 60
+Restful_interval = 300			# 300 seconds
 
 FS_SD = "/mnt/mmcblk0p1"
 
