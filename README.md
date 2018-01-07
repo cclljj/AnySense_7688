@@ -1,6 +1,6 @@
-This is the AnySense project for MediaTek LinkIt 7688 board. The codes will conduct sensing tasks and report the results to the LASS MQTT broker. The codes are based on MRAA library in Python, so hopefully it will run smoothly on the other MRAA-supported boards.
+This is the AnySense project for MediaTek LinkIt 7688 board. The project conducts sensing tasks and reports the results to the LASS backend database via either MQTT or Restful API. The project are based on MRAA library in Python, and hopefully it shall run smoothly on the other MRAA-supported platforms.
 
-## Sensors supported (till 2017/11/12)
+## Sensors supported (till 2018/1/7)
 * Temperature and Humidity Sensor
   * HTU21d (I2C)
   * SHT2x (I2C)
@@ -27,7 +27,7 @@ Please login you development board, and change to your working directory. Then, 
    git clone https://github.com/cclljj/AnySense_7688
    ```
 
-2. Install phao library by the command (no need if you are using RESTful)
+2. Install phao library by the command (optional, only needed if you want to use MQTT for data transmission)
    ```
    pip install paho-mqtt
    ```
@@ -37,7 +37,8 @@ Please login you development board, and change to your working directory. Then, 
    * Sense_Tmp: Enable Temperature/Humidity sensor (1) or Not (0)
    * Sense_Light: Enable Light sensor (1) or Not (0)
    * Sense_Gas: Enable Gas sensor (1) or Not (0)
-   ***
+   * Use_RTC_DS3231: Enable RTC (DS3231) (1) or Not (0)
+   ***
    * import xxx as pm_sensor: Change xxx to the corresponding module (or leave it unchanged if you don't need a PM sensor)
    * import xxx as tmp_sensor: Change xxx to the corresponding module (or leave it unchanged if you don't need a Temperature/Humidity sensor)
    * import xxx as light_sensor: Change xxx to the corresponding module (or leave it unchanged if you don't need a light sensor)
@@ -46,7 +47,8 @@ Please login you development board, and change to your working directory. Then, 
    * GPS coordinates: including GPS_LAT and GPS_LON
    * LASS settings: including APP_ID, DEVICE, and DEVICE_ID
    * MQTT settings: including MQTT_broker, MQTT_port, MQTT_topic, and MQTT_interval
-   
+   * Restful settings: including Restful_URL and Restful_interval
+   
 4. Run the main program by
    ```
    python AnySense.py
