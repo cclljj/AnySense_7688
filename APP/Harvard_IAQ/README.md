@@ -1,5 +1,7 @@
 # Harvard_IAQ Project
 
+This is the main page for the Harvard_IAQ project. The development of this project is based on the AnySense_7688 project. However, we are sorry that we cannot release further information because most of the details are remaining confidental. We will make that public once we are authorized to do so.
+
 ## Hardware
 
 * MediaTek LinkIt Smart 7688
