@@ -2,6 +2,10 @@
 
 This is the main page for the LASS7688 project. The development of this project is based on the AnySense_7688 project. The project is distributed in an open sourced manner, and you are welcome to contribute and help us!
 
+## Change log
+
+* 2018/1/7: version 0.1 released (use G5T, and support SD storage, OLED, Restful data uploading)
+
 ## Hardware
 
 * MediaTek LinkIt Smart 7688
