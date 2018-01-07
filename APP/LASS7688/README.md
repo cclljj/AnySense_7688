@@ -9,7 +9,7 @@ This is the main page for the LASS7688 project. The development of this project 
 ## Hardware
 
 * MediaTek LinkIt Smart 7688
-* MediaTek LinkIt Smart 7688 Breakout v2.0 (optional)
+* MediaTek LinkIt Smart 7688 Breakout (optional)
 * T/H/PM sensor: Plantower PMS5003T
   * https://www.taiwaniot.com.tw/product/pms5003t-g5t-攀藤粉塵溫濕度二合一感測器/
   * http://mntech.com.tw/PMS5003T
