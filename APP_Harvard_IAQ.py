@@ -13,9 +13,7 @@ values = Conf.values
 
 def upload_data():
 	CSV_items = ['device_id','date','time','s_t0','s_h0','s_d0','s_d1','s_d2','s_lr','s_lg','s_lb','s_lc', 's_l0', 's_g8']
-
-	timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
-	pairs = timestamp.split(" ")
+	pairs = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S").split(" ")
 	values["device_id"] = Conf.DEVICE_ID
 	values["ver_app"] = Conf.Version
 	values["date"] = pairs[0]
@@ -48,38 +46,21 @@ def upload_data():
 		f.write(msg + "\n")
 
 def display_data(disp):
-	timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
-	pairs = timestamp.split(" ")
-
+	pairs = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S").split(" ")
 	disp.setCursor(0,0)
-	temp = '{:16}'.format("ID: " + Conf.DEVICE_ID)
-	disp.write(temp)
-	
+	disp.write('{:16}'.format("ID: " + Conf.DEVICE_ID))
         disp.setCursor(1,0)                                                                
-        temp = '{:16}'.format("Date: " + pairs[0])
-	disp.write(temp)
-	
+        disp.write('{:16}'.format("Date: " + pairs[0]))
 	disp.setCursor(2,0)                                                                
-        temp = '{:16}'.format("Time: " + pairs[1])
-	disp.write(temp)
-	
+        disp.write('{:16}'.format("Time: " + pairs[1]))
 	disp.setCursor(3,0)                                                                                                                              
-	temp = (values["s_t0"]*1.8)+32
-        temp = '{:16}'.format('Temp: %.2fF' % temp)
-	disp.write(temp)
-	
+        disp.write('{:16}'.format('Temp: %.2fF' % ((values["s_t0"]*1.8)+32)))
 	disp.setCursor(4,0)                                                                
-        temp = '{:16}'.format('  RH: %.2f%%' % values["s_h0"])
-	disp.write(temp)
-	
+        disp.write('{:16}'.format('  RH: %.2f%%' % values["s_h0"]))
 	disp.setCursor(5,0)                                                                                                            
-        temp = '{:16}'.format('PM2.5: %dug/m3' % values["s_d0"])
-	disp.write(temp)
-	
-	disp.setCursor(6,0)                                                                
-	temp = '{:16}'.format('Light: %dLux' % values["s_l0"])
-	disp.write(temp)
-	
+        disp.write('{:16}'.format('PM2.5: %dug/m3' % values["s_d0"]))
+	disp.setCursor(6,0)                                                                                                            
+        disp.write('{:16}'.format('Light: %dLux' % values["s_l0"]))
 	
 def reboot_system():
 	process = subprocess.Popen(['uptime'], stdout = subprocess.PIPE)
