@@ -1,3 +1,5 @@
+# Harvard_IAQ Project
+
 ## Hardware
 
 * MediaTek LinkIt Smart 7688
