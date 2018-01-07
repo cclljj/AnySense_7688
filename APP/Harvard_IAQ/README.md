@@ -26,7 +26,9 @@ Please login you 7688 board, and change the working directory to /root. Then, pl
    ```
    git clone https://github.com/cclljj/AnySense_7688
    ```
-2. Run the setup script with a secure key, which is required for data uploading to the backend database. Note that the secure key is distributed to the Harvard_IAQ project members in person only. 
+2. update the values of GPS_LAT and GPS_LON with your GPS coordinates in the file /root/AnySense_7688/APP_Harvard_IAQ_config.py
+
+3. Run the setup script with a secure key, which is required for data uploading to the backend database. Note that the secure key is distributed to the Harvard_IAQ project members in person only. 
    ```
    /root/AnySense_7688/APP/Harvard_IAQ/setup.sh key
    ```
