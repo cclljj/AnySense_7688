@@ -25,8 +25,10 @@ Please login your 7688 board, and switch your 7688 to station mode (note: the ot
 1. Use the coommand to get the latest version of the codes: 
    ```
    git clone https://github.com/cclljj/AnySense_7688
-   ```
-2. Run the setup script:
+   ```
+2. update the values of GPS_LAT and GPS_LON with your GPS coordinates in the file /root/AnySense_7688/APP_LASS7688_config.py
+
+3. Run the setup script:
    ```
    /root/AnySense_7688/APP/LASS7688/setup.sh
    ```
