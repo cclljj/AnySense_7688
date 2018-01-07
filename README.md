@@ -17,7 +17,7 @@ This is the AnySense project for MediaTek LinkIt 7688 board. The codes will cond
   * SenseAir S8 (UART1)
   * Sensirion SGP30 (I2C)
 * RTC: real time clock
-  * DS3231 (I2C)
+  * DS3231 (I2C)
  
 ## How to run this program?
 Please login you development board, and change to your working directory. Then, please follow the following steps:
