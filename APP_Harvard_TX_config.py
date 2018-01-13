@@ -23,7 +23,7 @@ Interval_LCD = 5
 
 Reboot_Time = 86400			# interval to reboot (seconds); 0 for no-rebooti
 
-Restful_URL = "https://data.lass-net.org/Upload/MAPS.php?"
+Restful_URL = "https://data.lass-net.org/Upload/MAPS-secure.php?"
 Restful_interval = 300			# 300 seconds
 
 SecureKey = "NoKey"
