@@ -49,11 +49,13 @@ if Use_RTC_DS3231 == 1:
 	import hmac
 	import hashlib
 	import base64
+	import urllib
 
 	DS3231_I2C_ADDR = 0x68
 	rtc = mraa.I2c(0)
 	rtc.address(DS3231_I2C_ADDR)
 	SecureKey = chr(rtc.readReg(0x07)) + chr(rtc.readReg(0x08)) + chr(rtc.readReg(0x09)) + chr(rtc.readReg(0x0A)) + chr(rtc.readReg(0x0B)) + chr(rtc.readReg(0x0C)) + chr(rtc.readReg(0x0D))
+	SecureKey = urllib.quote_plus(SecureKey)
 	print "SecureKey = " , SecureKey
 
 pm_q = Queue(maxsize=5)                                                                                                                     
