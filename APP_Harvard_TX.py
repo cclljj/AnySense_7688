@@ -34,7 +34,7 @@ def upload_data():
 			tq = tq.replace('"','')
 			msg = msg + "|" + item + "=" + tq 
 
-	restful_str = "wget -O /tmp/last_upload.log \"" + Conf.Restful_URL + "topic=" + Conf.APP_ID + "&device_id=" + Conf.DEVICE_ID + "&msg=" + msg + "\""
+	restful_str = "wget -O /tmp/last_upload.log \"" + Conf.Restful_URL + "topic=" + Conf.APP_ID + "&device_id=" + Conf.DEVICE_ID + "&key=" + Conf.SecureKey + "&msg=" + msg + "\""
 	os.system(restful_str)
 
 	msg = ""

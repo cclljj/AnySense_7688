@@ -10,6 +10,8 @@ Sense_PM = 1
 Sense_Tmp = 0
 Sense_Light = 0
 Sense_Gas = 1
+Use_RTC_DS3231 = 1
+
 
 GPS_LAT = 25.1933
 GPS_LON = 121.7870
@@ -23,6 +25,8 @@ Reboot_Time = 86400			# interval to reboot (seconds); 0 for no-rebooti
 
 Restful_URL = "https://data.lass-net.org/Upload/MAPS.php?"
 Restful_interval = 300			# 300 seconds
+
+SecureKey = "NoKey"
 
 FS_SD = "/mnt/mmcblk0p1"
 
@@ -39,6 +43,18 @@ num_re_pattern = re.compile("^-?\d+\.\d+$|^-?\d+$")
 #mac = str(':'.join(['{:02x}'.format((uuid.getnode() >> i) & 0xff) for i in range(0,8*6,8)][::-1])).upper()
 mac = open('/sys/class/net/eth0/address').readline().upper().strip()
 DEVICE_ID = mac.replace(':','')                                                                           
+
+if Use_RTC_DS3231 == 1:
+	import mraa
+	import hmac
+	import hashlib
+	import base64
+
+	DS3231_I2C_ADDR = 0x68
+	rtc = mraa.I2c(0)
+	rtc.address(DS3231_I2C_ADDR)
+	SecureKey = chr(rtc.readReg(0x07)) + chr(rtc.readReg(0x08)) + chr(rtc.readReg(0x09)) + chr(rtc.readReg(0x0A)) + chr(rtc.readReg(0x0B)) + chr(rtc.readReg(0x0C)) + chr(rtc.readReg(0x0D))
+	print "SecureKey = " , SecureKey
 
 pm_q = Queue(maxsize=5)                                                                                                                     
 tmp_q = Queue(maxsize=5)                                                                                                                     
