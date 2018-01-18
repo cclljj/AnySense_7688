@@ -28,7 +28,7 @@ Please login you 7688 board, and change the working directory to /root. Then, pl
 
 3. Run the setup script:
    ```
-   /root/AnySense_7688/APP/Harvard_TX/setup.sh
+   /root/AnySense_7688/APP/Harvard_TX/setup.sh KEY
    ```
 
 Then, the script will install and configure everything. The system will reboot after the installation is done, and hopefully the system will start to upload data to the backend database.
