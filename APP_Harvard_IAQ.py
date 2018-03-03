@@ -46,6 +46,7 @@ def upload_data():
 		f.write(msg + "\n")
 
 def display_data(disp):
+	global connection_flag
 	pairs = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S").split(" ")
 	disp.setCursor(0,0)
 	disp.write('{:16}'.format("ID: " + Conf.DEVICE_ID))
@@ -61,6 +62,14 @@ def display_data(disp):
         disp.write('{:16}'.format('PM2.5: %dug/m3' % values["s_d0"]))
 	disp.setCursor(6,0)                                                                                                            
         disp.write('{:16}'.format('Light: %dLux' % values["s_l0"]))
+
+    disp.setCursor(7,0)
+	temp = '{:16}'.format(Conf.DEVICE_IP)
+	disp.write(temp)
+
+	disp.setCursor(7,15)
+    temp = connection_flag
+    disp.write(temp)
 	
 def reboot_system():
 	process = subprocess.Popen(['uptime'], stdout = subprocess.PIPE)
@@ -73,6 +82,13 @@ def reboot_system():
 
 	if k>1.5:
 		os.system("echo b > /proc/sysrq-trigger")
+
+def check_connection():
+	global connection_flag
+	if(os.system('ping www.google.com -q -c 1  > /dev/null')):
+		connection_flag = "X"
+	else:
+		connection_flag = "@"
 
 if __name__ == '__main__':
 	if Conf.Sense_PM==1:
@@ -111,6 +127,7 @@ if __name__ == '__main__':
 	values["s_g8"] = 0
 	while True:
 		reboot_system()
+		check_connection()
 
 		if Conf.Sense_PM==1 and not Conf.pm_q.empty():
 			while not Conf.pm_q.empty():

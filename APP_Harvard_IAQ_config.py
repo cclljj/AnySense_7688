@@ -6,7 +6,7 @@ import gas_co2_s8 as gas_sensor
 import pyupm_i2clcd as upmLCD
 
 
-Version = 0.1
+Version = "0.1.2"
 
 Sense_PM = 1                          
 Sense_Tmp = 1
@@ -19,6 +19,7 @@ GPS_LON = 121.7870
 APP_ID = "Harvard_IAQ"
 DEVICE = "LinkIt_Smart_7688"
 DEVICE_ID = "DEVICE_ID1234"
+DEVICE_IP = ''
 
 Interval_LCD = 5
 
@@ -34,6 +35,7 @@ FS_SD = "/mnt/mmcblk0p1"
 
 import uuid
 import re
+import os
 from multiprocessing import Queue
 
 float_re_pattern = re.compile("^-?\d+\.\d+$")                                                                                               
@@ -41,6 +43,13 @@ num_re_pattern = re.compile("^-?\d+\.\d+$|^-?\d+$")
 
 mac = open('/sys/class/net/eth0/address').readline().upper().strip()
 DEVICE_ID = mac.replace(':','') 
+
+f = os.popen('ifconfig eth0 | grep "inet\ addr" | cut -d: -f2 | cut -d" " -f1')
+DEVICE_IP=f.read()
+if(DEVICE_IP == ''):
+        f = os.popen('ifconfig apcli0 | grep "inet\ addr" | cut -d: -f2 | cut -d" " -f1')
+        DEVICE_IP=f.read()    
+
 
 if Use_RTC_DS3231 == 1:
 	import mraa
