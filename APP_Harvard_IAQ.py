@@ -68,8 +68,8 @@ def display_data(disp):
 	disp.write(temp)
 
 	disp.setCursor(7,15)
-    temp = connection_flag
-    disp.write(temp)
+    	temp = connection_flag
+    	disp.write(temp)
 	
 def reboot_system():
 	process = subprocess.Popen(['uptime'], stdout = subprocess.PIPE)
