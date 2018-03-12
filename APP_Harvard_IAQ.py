@@ -63,7 +63,7 @@ def display_data(disp):
 	disp.setCursor(6,0)                                                                                                            
         disp.write('{:16}'.format('Light: %dLux' % values["s_l0"]))
 
-    disp.setCursor(7,0)
+    	disp.setCursor(7,0)
 	temp = '{:16}'.format(Conf.DEVICE_IP)
 	disp.write(temp)
 
