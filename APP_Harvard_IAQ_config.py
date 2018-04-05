@@ -6,7 +6,7 @@ import gas_co2_s8 as gas_sensor
 import pyupm_i2clcd as upmLCD
 
 
-Version = "0.1.2"
+Version = "0.1.3"
 
 Sense_PM = 1                          
 Sense_Tmp = 1
