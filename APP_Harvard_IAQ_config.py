@@ -81,7 +81,7 @@ fields ={       "Tmp"   :       "s_t0",
 		"RGB_G"	:	"s_lg",
 		"RGB_B"	:	"s_lb",
 		"RGB_C"	:	"s_lc",
-                "CO2"   :       "s_g8e",              
+                "CO2"   :       "s_g8",              
 		"TVOC"	:	"s_gg",
         }                                            
 values = {      "app"           :       APP_ID,      
