@@ -2,7 +2,7 @@ import pm_g5t as pm_sensor
 import pyupm_i2clcd as upmLCD
 
 
-Version = 0.1
+Version = "5.2"
 
 Sense_PM = 1                          
 Sense_Tmp = 0
