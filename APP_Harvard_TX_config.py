@@ -4,7 +4,7 @@ import light_bh1750fvi as light_sensor
 import gas_tvoc_sgp30 as gas_sensor
 import pyupm_i2clcd as upmLCD
 
-Version = "0.3.1"
+Version = "5.2a"
 
 Sense_PM = 1                          
 Sense_Tmp = 0
