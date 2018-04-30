@@ -1,0 +1,1 @@
+0 0 * * * /usr/bin/python /root/AnySense_7688/AnySense_RTC.py &>/dev/null 
