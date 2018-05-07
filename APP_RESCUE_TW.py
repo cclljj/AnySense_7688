@@ -68,8 +68,8 @@ def display_data(disp):
 	disp.write(temp)
 	
 	disp.setCursor(3,0)                                                                                                                              
-	temp = (values["s_t0"]*1.8)+32
-        temp = '{:16}'.format('Temp: %.2fF' % temp)
+	#temp = (values["s_t0"]*1.8)+32
+        temp = '{:16}'.format('Temp: %.2fC' % values["s_t0"])
 	disp.write(temp)
 	
 	disp.setCursor(4,0)                                                                
