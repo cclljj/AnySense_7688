@@ -22,9 +22,12 @@ def upload_data():
 	values["time"] = pairs[1]
 	
 	values["tick"] = 0
-	with open('/proc/uptime', 'r') as f:
-		values["tick"] = float(f.readline().split()[0])
-		
+	try:
+		with open('/proc/uptime', 'r') as f:
+			values["tick"] = float(f.readline().split()[0])
+	except:
+		print "Error: reading /proc/uptime"
+	
 	msg = ""
 	for item in values:
 		if Conf.num_re_pattern.match(str(values[item])):
@@ -46,8 +49,11 @@ def upload_data():
 		else:
 			msg = msg + "N/A" + '\t'
 	
-	with open(Conf.FS_SD + "/" + values["date"] + ".txt", "a") as f:
-		f.write(msg + "\n")
+	try:
+		with open(Conf.FS_SD + "/" + values["date"] + ".txt", "a") as f:
+			f.write(msg + "\n")
+	except:
+		print "Error: writing to SD"
 
 def display_data(disp):
 	global connection_flag
