@@ -15,7 +15,7 @@ Use_RTC_DS3231 = 1
 
 GPS_LAT = 25.1933
 GPS_LON = 121.7870
-APP_ID = "Harvard_TX"
+APP_ID = "Harvard_TX_Prototype"
 DEVICE = "LinkIt_Smart_7688"
 DEVICE_ID = "DEVICE_ID1234"
 DEVICE_IP = ''
