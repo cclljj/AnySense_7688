@@ -87,7 +87,7 @@ def display_data(disp):
 	disp.write(temp)
 	
 	if(values["s_gg"] != 65535):
-			disp.setCursor(6,0)                                                                
+		disp.setCursor(6,0)                                                                
 		temp = '{:16}'.format('TVOC: %dppb' % values["s_gg"])
 		disp.write(temp)
 
