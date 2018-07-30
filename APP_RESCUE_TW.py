@@ -86,7 +86,12 @@ def display_data(disp):
         temp = '{:16}'.format('PM2.5: %dug/m3' % values["s_d0"])
 	disp.write(temp)
 	
-	if(values["s_gg"] != 65535):
+	if(values["s_gg"] == 65535):
+		disp.setCursor(6,0)                                                                
+		temp = '{:16}'.format('TVOC:  no sensor')
+		disp.write(temp)
+		
+	else:
 		disp.setCursor(6,0)                                                                
 		temp = '{:16}'.format('TVOC: %dppb' % values["s_gg"])
 		disp.write(temp)
