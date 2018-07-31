@@ -88,7 +88,7 @@ def display_data(disp):
 	
 	if(values["s_gg"] == 65535):
 		disp.setCursor(6,0)                                                                
-		temp = '{:16}'.format('TVOC:  no sensor')
+		temp = '{:16}'.format('                ')
 		disp.write(temp)
 		
 	else:
