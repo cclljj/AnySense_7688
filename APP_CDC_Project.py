@@ -6,16 +6,14 @@ import subprocess
 
 from datetime import datetime
 
-import APP_RESCUE_TW_config as Conf
+import APP_CDC_Project_config as Conf
 
 fields = Conf.fields
 values = Conf.values
 
 def upload_data():
-	CSV_items = ['device_id','date','time','s_t0','s_h0','s_d0','s_d1','s_d2','s_gg','s_g8e']
-
-	timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
-	pairs = timestamp.split(" ")
+	CSV_items = ['device_id','date','time','s_t0','s_h0','s_d0','s_d1','s_d2','s_lr','s_lg','s_lb','s_lc', 's_l0', 's_g8']
+	pairs = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S").split(" ")
 	values["device_id"] = Conf.DEVICE_ID
 	values["ver_app"] = Conf.Version
 	values["date"] = pairs[0]
@@ -27,7 +25,7 @@ def upload_data():
 			values["tick"] = float(f.readline().split()[0])
 	except:
 		print "Error: reading /proc/uptime"
-	
+		
 	msg = ""
 	for item in values:
 		if Conf.num_re_pattern.match(str(values[item])):
@@ -37,10 +35,8 @@ def upload_data():
 			tq = tq.replace('"','')
 			msg = msg + "|" + item + "=" + tq 
 
-	#restful_str = "wget -O /tmp/last_upload.log \"" + Conf.Restful_URL + "topic=" + Conf.APP_ID + "&device_id=" + Conf.DEVICE_ID + "&key=" + Conf.SecureKey + "&msg=" + msg + "\""
-	restful_str = "wget -O /tmp/last_upload.log \"" + Conf.Restful_URL + "topic=" + Conf.APP_ID + "&device_id=" + Conf.DEVICE_ID + "&msg=" + msg + "\""
+	restful_str = "wget -O /tmp/last_upload.log \"" + Conf.Restful_URL + "topic=" + Conf.APP_ID + "&device_id=" + Conf.DEVICE_ID + "&key=" + Conf.SecureKey + "&msg=" + msg + "\""
 	os.system(restful_str)
-	
 
 	msg = ""
 	for item in CSV_items:
@@ -57,53 +53,29 @@ def upload_data():
 
 def display_data(disp):
 	global connection_flag
-	#Timer(5, display_data, {disp}).start()
-	timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
-	pairs = timestamp.split(" ")
-
+	pairs = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S").split(" ")
 	disp.setCursor(0,0)
-	temp = '{:16}'.format("ID: " + Conf.DEVICE_ID)
-	disp.write(temp)
-	
+	disp.write('{:16}'.format("ID: " + Conf.DEVICE_ID))
         disp.setCursor(1,0)                                                                
-        temp = '{:16}'.format("Date: " + pairs[0])
-	disp.write(temp)
-	
+        disp.write('{:16}'.format("Date: " + pairs[0]))
 	disp.setCursor(2,0)                                                                
-        temp = '{:16}'.format("Time: " + pairs[1])
-	disp.write(temp)
-	
+        disp.write('{:16}'.format("Time: " + pairs[1]))
 	disp.setCursor(3,0)                                                                                                                              
-	#temp = (values["s_t0"]*1.8)+32
-        temp = '{:16}'.format('Temp: %.2fC' % values["s_t0"])
-	disp.write(temp)
-	
+        disp.write('{:16}'.format('Temp: %.2fF' % ((values["s_t0"]*1.8)+32)))
 	disp.setCursor(4,0)                                                                
-        temp = '{:16}'.format('  RH: %.2f%%' % values["s_h0"])
-	disp.write(temp)
-	
+        disp.write('{:16}'.format('  RH: %.2f%%' % values["s_h0"]))
 	disp.setCursor(5,0)                                                                                                            
-        temp = '{:16}'.format('PM2.5: %dug/m3' % values["s_d0"])
-	disp.write(temp)
-	
-	if(values["s_gg"] == 65535):
-		disp.setCursor(6,0)                                                                
-		temp = '{:16}'.format('                ')
-		disp.write(temp)
-		
-	else:
-		disp.setCursor(6,0)                                                                
-		temp = '{:16}'.format('TVOC: %dppb' % values["s_gg"])
-		disp.write(temp)
+        disp.write('{:16}'.format('PM2.5: %dug/m3' % values["s_d0"]))
+	disp.setCursor(6,0)                                                                                                            
+        disp.write('{:16}'.format('Light: %dLux' % values["s_l0"]))
 
-	disp.setCursor(7,0)
+    	disp.setCursor(7,0)
 	temp = '{:16}'.format(Conf.DEVICE_IP)
 	disp.write(temp)
 
 	disp.setCursor(7,15)
-        temp = connection_flag
-        disp.write(temp)
-	
+    	temp = connection_flag
+    	disp.write(temp)
 	
 def reboot_system():
 	process = subprocess.Popen(['uptime'], stdout = subprocess.PIPE)
@@ -147,12 +119,18 @@ if __name__ == '__main__':
 	disp.clear()
 
 	count = 0
-        values["s_d0"] = 0                                                                                                                                  
-        values["s_d1"] = 0                                                                                                                                  
-        values["s_gg"] = 0                                                                                                                                  
-        values["s_g8e"] = 0                                                                                                                                  
-        values["s_t0"] = 0                                                                                                                                  
-        values["s_h0"] = 0                                                                                                                                  
+
+	values["s_d0"] = 0
+	values["s_d1"] = 0
+	values["s_d2"] = 0
+	values["s_t0"] = 0
+	values["s_h0"] = 0
+	values["s_lr"] = -1
+	values["s_lg"] = -1
+	values["s_lb"] = -1
+	values["s_lc"] = -1
+	values["s_l0"] = -1
+	values["s_g8"] = 0
 	while True:
 		reboot_system()
 		check_connection()
@@ -198,7 +176,7 @@ if __name__ == '__main__':
                                 else:                                                                             
                                         values[item] = gas_data[item]                                             
 		display_data(disp)
-		if count == 6:
+		if count == 0:
 			upload_data()
 			
 		count = count + 1

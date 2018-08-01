@@ -6,7 +6,7 @@ import gas_co2_s8 as gas_sensor
 import pyupm_i2clcd as upmLCD
 
 
-Version = "0.1.2"
+Version = "5.2b.1"
 
 Sense_PM = 1                          
 Sense_Tmp = 1
@@ -16,14 +16,12 @@ Use_RTC_DS3231 = 1
 
 GPS_LAT = 25.1933
 GPS_LON = 121.7870
-APP_ID = "Harvard_IAQ_Prototype"
+APP_ID = "NTUH_Telehealth"
 DEVICE = "LinkIt_Smart_7688"
 DEVICE_ID = "DEVICE_ID1234"
 DEVICE_IP = ''
 
 Interval_LCD = 5
-
-Reboot_Time = 3600
 
 Restful_URL = "https://data.lass-net.org/Upload/MAPS-secure.php?"
 Restful_interval = 60			# 60 seconds
@@ -83,7 +81,7 @@ fields ={       "Tmp"   :       "s_t0",
 		"RGB_G"	:	"s_lg",
 		"RGB_B"	:	"s_lb",
 		"RGB_C"	:	"s_lc",
-                "CO2"   :       "s_g8e",              
+                "CO2"   :       "s_g8",              
 		"TVOC"	:	"s_gg",
         }                                            
 values = {      "app"           :       APP_ID,      
