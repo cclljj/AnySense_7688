@@ -1,5 +1,5 @@
-import pm_g5t as pm_sensor
-import pyupm_i2clcd as upmLCD
+import lib.pm_g5t as pm_sensor
+import lib.pyupm_i2clcd as upmLCD
 
 
 Version = "5.2"
