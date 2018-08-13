@@ -1,8 +1,8 @@
-import pm_g5t as pm_sensor
-import th_htu21d as tmp_sensor
-import light_bh1750fvi as light_sensor
-import tvoc_sgp30 as gas_sensor
-import pyupm_i2clcd as upmLCD
+import lib.pm_g5t as pm_sensor
+import lib.th_htu21d as tmp_sensor
+import lib.light_bh1750fvi as light_sensor
+import lib.tvoc_sgp30 as gas_sensor
+import lib.pyupm_i2clcd as upmLCD
 
 Sense_PM = 1                          
 Sense_Tmp = 0
