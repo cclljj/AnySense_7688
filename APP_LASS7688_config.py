@@ -1,4 +1,4 @@
-import pm_g5t as pm_sensor
+import lib.pm_g5t as pm_sensor
 import pyupm_i2clcd as upmLCD
 
 
