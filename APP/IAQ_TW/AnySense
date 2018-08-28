@@ -8,15 +8,15 @@ start()
 {
 
 	sleep 30
-        [ -f /root/AnySense_7688/APP_NTUH_Telehealth.py ] && {
+        [ -f /root/AnySense_7688/APP_IAQ_TW.py ] && {
 		/usr/bin/git -C /root/AnySense_7688 fetch origin
 		/usr/bin/git -C /root/AnySense_7688 reset --hard origin/master
 		/usr/bin/python /root/AnySense_7688/AnySense_RTC.py &>/dev/null
-		/usr/bin/python /root/AnySense_7688/APP_NTUH_Telehealth.py &>/dev/null
+		/usr/bin/python /root/AnySense_7688/APP_IAQ_TW.py &>/dev/null
         } || {
                 /usr/bin/git clone https://github.com/cclljj/AnySense_7688/ /root/AnySense_7688
 		/usr/bin/python /root/AnySense_7688/AnySense_RTC.py &>/dev/null
-		/usr/bin/python /root/AnySense_7688/APP_NTUH_Telehealth.py &>/dev/null
+		/usr/bin/python /root/AnySense_7688/APP_IAQ_TW.py &>/dev/null
         }
 
 
@@ -24,7 +24,7 @@ start()
 
 stop()
 {
-        [ -f /root/AnySense_7688/APP_NTUH_Telehealth.py ] && {
+        [ -f /root/AnySense_7688/APP_IAQ_TW.py ] && {
 		rm -rf /root/AnySense_7688
 	}
 }
