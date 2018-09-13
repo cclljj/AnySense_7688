@@ -6,7 +6,7 @@ import subprocess
 
 from datetime import datetime
 
-import APP_NTUH_Telehealth_config as Conf
+import APP_IAQ_TW_config as Conf
 
 fields = Conf.fields
 values = Conf.values
