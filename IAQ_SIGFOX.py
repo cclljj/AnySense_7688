@@ -23,7 +23,7 @@ def readlineCR(port):
        ch = port.read()
        rv += ch
        if ch=='\r' or ch=='':
-          return rv
+                return rv
 
 
 def upload_data():
@@ -203,33 +203,33 @@ if __name__ == '__main__':
         if Conf.Sense_Tmp==1 and not Conf.tmp_q.empty():
             while not Conf.tmp_q.empty():
                 tmp_data = Conf.tmp_q.get()
-                        for item in tmp_data:                                                                 
-                                if item in fields:                                                                
-                                        values[fields[item]] = tmp_data[item]                                     
-                    if Conf.float_re_pattern.match(str(values[fields[item]])):
+                for item in tmp_data:                                                                 
+                        if item in fields:                                                                
+                                values[fields[item]] = tmp_data[item]                                     
+                if Conf.float_re_pattern.match(str(values[fields[item]])):
                         values[fields[item]] = round(float(values[fields[item]]),2)
-                                else:                                                                             
-                                        values[item] = tmp_data[item]
+                else:                                                                             
+                        values[item] = tmp_data[item]
         if Conf.Sense_Light==1 and not Conf.light_q.empty():
             while not Conf.light_q.empty(): 
                 light_data = Conf.light_q.get()
-                        for item in light_data:                                                                 
-                                if item in fields:                                                                
-                                        values[fields[item]] = light_data[item]                                     
-                    if Conf.float_re_pattern.match(str(values[fields[item]])):
+                for item in light_data:                                                                 
+                        if item in fields:                                                                
+                                values[fields[item]] = light_data[item]                                     
+                if Conf.float_re_pattern.match(str(values[fields[item]])):
                         values[fields[item]] = round(float(values[fields[item]]),2)
-                                else:                                                                             
-                                        values[item] = light_data[item]                                             
+                else:                                                                             
+                        values[item] = light_data[item]                                             
         if Conf.Sense_Gas==1 and not Conf.gas_q.empty():
             while not Conf.gas_q.empty():
                 gas_data = Conf.gas_q.get()
-                        for item in gas_data:                                                                 
-                                if item in fields:                                                                
-                                        values[fields[item]] = gas_data[item]                                     
-                    if Conf.float_re_pattern.match(str(values[fields[item]])):
+                for item in gas_data:                                                                 
+                        if item in fields:                                                                
+                                values[fields[item]] = gas_data[item]                                     
+                if Conf.float_re_pattern.match(str(values[fields[item]])):
                         values[fields[item]] = round(float(values[fields[item]]),2)
-                                else:                                                                             
-                                        values[item] = gas_data[item]                                           
+                else:                                                                             
+                        values[item] = gas_data[item]                                             
 
         display_data(disp)
         if count == 0:
