@@ -1,7 +1,7 @@
 import lib.pm_g3 as pm_sensor
 import lib.th_htu21d as tmp_sensor
 import lib.light_tcs34725 as light_sensor
-import gas_tvoc_sgp30 as TVOC_sensor
+import lib.gas_tvoc_sgp30 as TVOC_sensor
 import lib.gas_co2_s8 as gas_sensor
 import pyupm_i2clcd as upmLCD
 
