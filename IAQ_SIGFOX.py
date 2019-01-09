@@ -92,7 +92,8 @@ def upload_data():
             msg = msg + str(values[item]) + '\t'
         else:
             msg = msg + "N/A" + '\t'
-        try:
+            
+    try:
         with open(Conf.FS_SD + "/" + values["date"] + ".txt", "a") as f:
             f.write(msg + "\n")
     except:
