@@ -56,17 +56,17 @@ def display_data(disp):
 	pairs = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S").split(" ")
 	disp.setCursor(0,0)
 	disp.write('{:16}'.format("ID: " + Conf.DEVICE_ID))
-    disp.setCursor(1,0)                                                                
-    disp.write('{:16}'.format("Date: " + pairs[0]))
-	disp.setCursor(2,0)                                                                
-    disp.write('{:16}'.format("Time: " + pairs[1]))
+	disp.setCursor(1,0)
+	disp.write('{:16}'.format("Date: " + pairs[0]))
+	disp.setCursor(2,0)
+	disp.write('{:16}'.format("Time: " + pairs[1]))
 	
 	#original display
 	#
-    #disp.setCursor(3,0)
-    #disp.write('{:16}'.format('Temp: %.2fF' % ((values["s_t0"]*1.8)+32)))
-	#disp.setCursor(4,0)                                                                
-    #disp.write('{:16}'.format('  RH: %.2f%%' % values["s_h0"]))
+	#disp.setCursor(3,0)
+	#disp.write('{:16}'.format('Temp: %.2fF' % ((values["s_t0"]*1.8)+32)))
+	#disp.setCursor(4,0)
+	#disp.write('{:16}'.format('  RH: %.2f%%' % values["s_h0"]))
 	#
 
 	#change Temperature and Humidity display to > [T: 23C / RH: 75%]
@@ -76,35 +76,35 @@ def display_data(disp):
 
 	#PM2.5 display [PM2.5: 13ug/m3]
 	disp.setCursor(4,0)
-    disp.write('{:16}'.format('PM2.5: %dug/m3' % values["s_d0"]))
+	disp.write('{:16}'.format('PM2.5: %dug/m3' % values["s_d0"]))
 	
 
-    #add CO2 display
-    disp.setCursor(5,0)
-    disp.write('{:16}'.format('CO2: %dppm' % values["s_g8"]))
-    #
+	#add CO2 display
+	disp.setCursor(5,0)
+	disp.write('{:16}'.format('CO2: %dppm' % values["s_g8"]))
+	#
 
 	#change Light to TVOC display
-	#disp.setCursor(5,0)                                                                                                            
-    #disp.write('{:16}'.format('Light: %dLux' % values["s_l0"]))
+	#disp.setCursor(5,0)
+	#disp.write('{:16}'.format('Light: %dLux' % values["s_l0"]))
 	if(values["s_gg"] == 65535):
-		disp.setCursor(6,0)                                                                
+		disp.setCursor(6,0)
 		temp = '{:16}'.format('                ')
 		disp.write(temp)
 		
 	else:
-		disp.setCursor(6,0)                                                                
+		disp.setCursor(6,0)
 		temp = '{:16}'.format('TVOC: %dppb' % values["s_gg"])
 		disp.write(temp)
 	#
 
-    disp.setCursor(7,0)
+	disp.setCursor(7,0)
 	temp = '{:16}'.format(Conf.DEVICE_IP)
 	disp.write(temp)
 
 	disp.setCursor(7,15)
-    temp = connection_flag
-    disp.write(temp)
+	temp = connection_flag
+	disp.write(temp)
 	
 def reboot_system():
 	process = subprocess.Popen(['uptime'], stdout = subprocess.PIPE)
@@ -214,12 +214,12 @@ if __name__ == '__main__':
         if Conf.Sense_TVOC==1 and not Conf.tvoc_q.empty():
 			while not Conf.tvoc_q.empty():
 				TVOC_data = Conf.tvoc_q.get()
-                        for item in TVOC_data:                                                                 
-                                if item in fields:                                                                
-                                        values[fields[item]] = TVOC_data[item]                                     
+                        for item in TVOC_data:
+                                if item in fields:
+                                        values[fields[item]] = TVOC_data[item]
 					if Conf.float_re_pattern.match(str(values[fields[item]])):
 						values[fields[item]] = round(float(values[fields[item]]),2)
-                                else:                                                                             
+                                else:
                                         values[item] = TVOC_data[item]
 
 
