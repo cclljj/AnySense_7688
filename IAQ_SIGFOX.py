@@ -229,7 +229,7 @@ if __name__ == '__main__':
                     if Conf.float_re_pattern.match(str(values[fields[item]])):
                         values[fields[item]] = round(float(values[fields[item]]),2)
                                 else:                                                                             
-                                        values[item] = gas_data[item]                                             
+                                        values[item] = gas_data[item]                                           
 
         display_data(disp)
         if count == 0:
