@@ -211,7 +211,7 @@ if __name__ == '__main__':
                                 else:                                                                             
                                         values[item] = gas_data[item]
 
-        if Conf.Sense_TVOC==1 and not Conf.tvoc_q.empty():
+		if Conf.Sense_TVOC==1 and not Conf.tvoc_q.empty():
 			while not Conf.tvoc_q.empty():
 				TVOC_data = Conf.tvoc_q.get()
                         for item in TVOC_data:
@@ -221,8 +221,6 @@ if __name__ == '__main__':
 						values[fields[item]] = round(float(values[fields[item]]),2)
                                 else:
                                         values[item] = TVOC_data[item]
-
-
 		display_data(disp)
 		if count == 0:
 			upload_data()
