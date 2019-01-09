@@ -92,7 +92,7 @@ def upload_data():
             msg = msg + str(values[item]) + '\t'
         else:
             msg = msg + "N/A" + '\t'
-            
+
     try:
         with open(Conf.FS_SD + "/" + values["date"] + ".txt", "a") as f:
             f.write(msg + "\n")
@@ -105,31 +105,32 @@ def display_data(disp):
     disp.setCursor(0,0)
     disp.write('{:16}'.format("ID: " + Conf.DEVICE_ID))
         
-        disp.setCursor(1,0)                                                                
-        disp.write('{:16}'.format("Date: " + pairs[0]))
+    disp.setCursor(1,0)                                                                
+    disp.write('{:16}'.format("Date: " + pairs[0]))
+
+    disp.setCursor(2,0)                                                                
+    disp.write('{:16}'.format("Time: " + pairs[1]))
     
-        disp.setCursor(2,0)                                                                
-        disp.write('{:16}'.format("Time: " + pairs[1]))
+    disp.setCursor(3,0)                                                                                                                              
+    disp.write('{:16}'.format('Temp: %.2fF' % ((values["s_t0"]*1.8)+32)))
     
-        disp.setCursor(3,0)                                                                                                                              
-        disp.write('{:16}'.format('Temp: %.2fF' % ((values["s_t0"]*1.8)+32)))
+    disp.setCursor(4,0)                                                                
+    disp.write('{:16}'.format('  RH: %.2f%%' % values["s_h0"]))
     
-        disp.setCursor(4,0)                                                                
-        disp.write('{:16}'.format('  RH: %.2f%%' % values["s_h0"]))
+    disp.setCursor(5,0)                                                                                                            
+    disp.write('{:16}'.format('PM2.5: %dug/m3' % values["s_d0"]))
     
-        disp.setCursor(5,0)                                                                                                            
-        disp.write('{:16}'.format('PM2.5: %dug/m3' % values["s_d0"]))
-    
-        disp.setCursor(6,0)                                                                                                            
-        disp.write('{:16}'.format('Light: %dLux' % values["s_l0"]))
+    disp.setCursor(6,0)                                                                                                            
+    disp.write('{:16}'.format('Light: %dLux' % values["s_l0"]))
         
-        disp.setCursor(7,0)
+    disp.setCursor(7,0)
+
     temp = '{:16}'.format(Conf.DEVICE_IP)
-        disp.write(temp)
+    disp.write(temp)
     
-        disp.setCursor(7,15)
-        temp = connection_flag
-        disp.write(temp)
+    disp.setCursor(7,15)
+    temp = connection_flag
+    disp.write(temp)
     
 def reboot_system():
     process = subprocess.Popen(['uptime'], stdout = subprocess.PIPE)
