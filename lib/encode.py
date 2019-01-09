@@ -63,7 +63,7 @@ def dec_to_binstr(data_dict):
     T2_binstr += (96 - len(T2_binstr)) * "0"
         # T1_binstr = T1_binstr + "00000000000000000000000000000000"
         # T2_binstr = T2_binstr + "00"
-   	return T1_binstr, T2_binstr
+    return T1_binstr, T2_binstr
 
 def bin_to_hex(value):
     hex_map = {	"0000": "0",

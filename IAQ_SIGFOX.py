@@ -54,7 +54,7 @@ def upload_data():
             tq = values[item]
             tq = tq.replace('"','')
             msg = msg + "|" + item + "=" + tq 
-        print "msg: ", msg
+        #print "msg: ", msg
         
     restful_str1 = "wget -O /tmp/last_upload.log \"" + Conf.Restful_URL + "?device_id=" + Conf.DEVICE_ID + "&data=" + T1_hexstr + "\""  
     os.system(restful_str1)
