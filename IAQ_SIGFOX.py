@@ -14,7 +14,12 @@ fields = Conf.fields
 values = Conf.values
 
 #for sigfox 
-port = serial.Serial("/dev/ttyUSB0",baudrate=9600, timeout=3.0)
+try:
+    port = serial.Serial("/dev/ttyUSB0",baudrate=9600, timeout=3.0)
+    sigfox_flag = " "
+except:
+    print "there is no sigfox on the board"
+    sigfox_flag = "!"
 #
 
 def readlineCR(port):
@@ -66,24 +71,27 @@ def upload_data():
     print T1_hexstr
     print T2_hexstr
 
-    #just test the SIGFOX
-    port.write("AT$RC\r\n")
-    time.sleep(1)
-    #rcv = readlineCR(port)
-    port.write("AT$GI?\r\n")
-    time.sleep(1)
-    #rcv = readlineCR(port)
-    port.write("AT$SF="+ T1_hexstr +"\r\n")
-    time.sleep(3)
-    #rcv = readlineCR(port)
-    #print(rcv)
+    try:
+        #just test the SIGFOX
+        port.write("AT$RC\r\n")
+        time.sleep(1)
+        #rcv = readlineCR(port)
+        port.write("AT$GI?\r\n")
+        time.sleep(1)
+        #rcv = readlineCR(port)
+        port.write("AT$SF="+ T1_hexstr +"\r\n")
+        time.sleep(3)
+        #rcv = readlineCR(port)
+        #print(rcv)
 
-    port.write("AT$RC\r\n")
-    time.sleep(1)
-    port.write("AT$GI?\r\n")
-    time.sleep(1)
-    port.write("AT$SF="+ T2_hexstr +"\r\n")
-    time.sleep(3)
+        port.write("AT$RC\r\n")
+        time.sleep(1)
+        port.write("AT$GI?\r\n")
+        time.sleep(1)
+        port.write("AT$SF="+ T2_hexstr +"\r\n")
+        time.sleep(3)
+    except:
+        print "there is no sigfox on the board"
 
     #
     msg = ""
@@ -100,7 +108,7 @@ def upload_data():
         print "Error: writing to SD"
 
 def display_data(disp):
-    global connection_flag
+    global connection_flag,sigfox_flag
     pairs = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S").split(" ")
     disp.setCursor(0,0)
     disp.write('{:16}'.format("ID: " + Conf.DEVICE_ID))
@@ -128,6 +136,10 @@ def display_data(disp):
     temp = '{:16}'.format(Conf.DEVICE_IP)
     disp.write(temp)
     
+    disp.setCursor(7,14)
+    temp = sigfox_flag
+    disp.write(temp)
+
     disp.setCursor(7,15)
     temp = connection_flag
     disp.write(temp)
