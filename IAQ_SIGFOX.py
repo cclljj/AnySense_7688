@@ -18,7 +18,7 @@ try:
     port = serial.Serial("/dev/ttyUSB0",baudrate=9600, timeout=3.0)
     sigfox_flag = " "
 except:
-    print "there is no sigfox on the board"
+    print "there is no sigfox on the board!!!"
     sigfox_flag = "!"
 #
 
@@ -91,7 +91,7 @@ def upload_data():
         port.write("AT$SF="+ T2_hexstr +"\r\n")
         time.sleep(3)
     except:
-        print "there is no sigfox on the board"
+        print "there is no sigfox on the board!!!"
 
     #
     msg = ""
