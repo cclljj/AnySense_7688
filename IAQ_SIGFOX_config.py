@@ -18,7 +18,7 @@ GPS_LAT = 25.1933
 GPS_LON = 121.7870
 APP_ID = "IAQ_SIGFOX"
 DEVICE = "LinkIt_Smart_7688"
-DEVICE_ID = ""
+DEVICE_ID = "DEVICE_ID1234"
 DEVICE_IP = ''
 
 Interval_LCD = 5
@@ -41,8 +41,8 @@ from multiprocessing import Queue
 float_re_pattern = re.compile("^-?\d+\.\d+$")                                                                                               
 num_re_pattern = re.compile("^-?\d+\.\d+$|^-?\d+$")
 
-# mac = open('/sys/class/net/eth0/address').readline().upper().strip()
-# DEVICE_ID = mac.replace(':','') 
+mac = open('/sys/class/net/eth0/address').readline().upper().strip()
+DEVICE_ID = mac.replace(':','') 
 
 f = os.popen('ifconfig eth0 | grep "inet\ addr" | cut -d: -f2 | cut -d" " -f1')
 DEVICE_IP=f.read()
