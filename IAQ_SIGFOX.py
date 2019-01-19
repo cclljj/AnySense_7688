@@ -16,6 +16,13 @@ values = Conf.values
 #for sigfox 
 try:
     port = serial.Serial("/dev/ttyUSB0",baudrate=9600, timeout=3.0)
+    port.write("AT$I=10\r\n")
+    time.sleep(0.5)
+    rcv = readlineCR(port)
+    sigfox_id= rcv[-6:]
+    print "==============ID==============="
+    print sigfox_id
+    print "==============ID==============="
     sigfox_flag = " "
 except:
     print "there is no sigfox on the board!!!"
