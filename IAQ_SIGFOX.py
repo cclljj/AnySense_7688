@@ -78,7 +78,7 @@ def upload_data():
         port.write("AT$I=10\r\n")
         time.sleep(0.5)
         rcv = readlineCR(port)
-        sigfox_id= rcv[-6:]
+        sigfox_id= rcv[-7:]
         print "==============ID==============="
         print sigfox_id
         print "==============ID==============="
