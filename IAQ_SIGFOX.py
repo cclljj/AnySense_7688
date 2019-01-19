@@ -73,7 +73,7 @@ def upload_data():
 
     try:
         #just test the SIGFOX
-        port.flush()
+        port.flushInput()
         time.sleep(0.5)
         port.write("AT$I=10\r\n")
         time.sleep(0.5)
