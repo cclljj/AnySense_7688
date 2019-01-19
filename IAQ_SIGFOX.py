@@ -73,6 +73,8 @@ def upload_data():
 
     try:
         #just test the SIGFOX
+        port.flush()
+        time.sleep(0.5)
         port.write("AT$I=10\r\n")
         time.sleep(0.5)
         rcv = readlineCR(port)
@@ -80,7 +82,7 @@ def upload_data():
         print "==============ID==============="
         print sigfox_id
         print "==============ID==============="
-        
+
         port.write("AT$RC\r\n")
         time.sleep(1)
         #rcv = readlineCR(port)
