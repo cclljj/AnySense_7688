@@ -20,15 +20,6 @@ try:
 except:
     print "there is no sigfox on the board!!!"
     sigfox_flag = "!"
-
-
-port.write("AT$I=10\r\n")
-time.sleep(0.5)
-rcv = readlineCR(port)
-sigfox_id= rcv[-6:]
-print "==============ID==============="
-print sigfox_id
-print "==============ID==============="
 #
 
 def readlineCR(port):
@@ -82,6 +73,14 @@ def upload_data():
 
     try:
         #just test the SIGFOX
+        port.write("AT$I=10\r\n")
+        time.sleep(0.5)
+        rcv = readlineCR(port)
+        sigfox_id= rcv[-6:]
+        print "==============ID==============="
+        print sigfox_id
+        print "==============ID==============="
+        
         port.write("AT$RC\r\n")
         time.sleep(1)
         #rcv = readlineCR(port)
@@ -100,7 +99,7 @@ def upload_data():
         port.write("AT$SF="+ T2_hexstr +"\r\n")
         time.sleep(3)
     except:
-        print "there is no sigfox on the board!!!"
+        print "there is a sigfox transmit error!!!"
 
     #
     msg = ""
