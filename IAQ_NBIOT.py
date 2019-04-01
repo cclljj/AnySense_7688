@@ -12,6 +12,7 @@ import IAQ_NBIOT_config as Conf
 fields = Conf.fields
 values = Conf.values
 
+#====================NBIOT======================#
 
 #for NBIOT 
 try:
@@ -21,6 +22,19 @@ except:
     print "there is no NBIOT on the board!!!"
     sigfox_flag = "!"
 #
+
+def formatStrToInt(target):
+    kit = ""
+    for i in range(len(target)):
+        temp=ord(target[i])
+        temp=hex(temp)[2:]
+        kit=kit+str(temp)+" "
+        #print(temp,)
+    return kit
+
+connect_pack = "10 22 00 06 4D 51 49 73 64 70 03 C2 00 3C 00 06 41 42 43 44 45 46 00 04 6D 61 70 73 00 06 69 69 73 6E 72 6C " #fix value for now / remember to change
+prifix = "MAPS/IAQ_TW/NBIOT/"+DEVICE_ID
+#====================NBIOT======================#
 
 
 def upload_data():
@@ -50,7 +64,62 @@ def upload_data():
 	restful_str = "wget -O /tmp/last_upload.log \"" + Conf.Restful_URL + "topic=" + Conf.APP_ID + "&device_id=" + Conf.DEVICE_ID + "&key=" + Conf.SecureKey + "&msg=" + msg + "\""
 	os.system(restful_str)
 
-	print("msg:",msg)
+	#print("msg:",msg)
+	#====================NBIOT======================#
+	msg = prifix + msg
+	payload_len = len(prifix+publish_pack) #remember to add tpoic length (2 byte in this case)
+	payload_len = payload_len + 2
+
+	#MQTT Remaining Length calculate
+	#currently support range 0~16383(1~2 byte)
+	if(payload_len<128):
+	    payload_len_hex = hex(payload_len).split('x')[-1]
+	else:
+	    a = payload_len % 128
+	    b = payload_len // 128
+	    a = hex(a+128).split('x')[-1]
+	    b = hex(b).split('x')[-1]
+	    b = b.zfill(2)
+	    payload_len_hex = str(a) + " " +  str(b)	
+
+	a = formatStrToInt(prifix+publish_pack)
+
+	add_on = "30 " + str(payload_len_hex.upper()) +" 00 1E "
+	end_line = "1A"
+	message_package = add_on + a + end_line
+
+	port.write("AT+CIPCLOSE\r".encode())
+	sleep(1)
+
+	port.write("AT+CIPSENDHEX=1\r\n".encode())
+	sleep(1)
+
+	port.write("AT+CSTT=\"nbiot\"\r\n".encode())
+	sleep(1)
+
+	port.write("AT+CIICR\r\n".encode())
+	sleep(1)
+
+	port.write("AT+CIFSR\r\n".encode())
+	sleep(1)
+
+	port.write("AT+CIPSTART=\"TCP\",\"35.162.236.171\",\"8883\"\r\n".encode())
+	sleep(1)
+
+	port.write("AT+CIPSEND\r\n".encode())
+	sleep(1)
+
+	port.write(connect_pack.encode())
+	sleep(1)
+
+	port.write(message_package.upper().encode())
+	sleep(1)
+
+	port.write("AT+CIPCLOSE\r\n".encode())
+	sleep(1)
+
+	#port.close()
+	#====================NBIOT======================#
 
 	msg = ""
 	for item in CSV_items:
