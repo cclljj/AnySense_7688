@@ -89,34 +89,34 @@ def upload_data():
 	message_package = add_on + a + end_line
 
 	port.write("AT+CIPCLOSE\r".encode())
-	sleep(1)
+	time.sleep(1)
 
 	port.write("AT+CIPSENDHEX=1\r\n".encode())
-	sleep(1)
+	time.sleep(1)
 
 	port.write("AT+CSTT=\"nbiot\"\r\n".encode())
-	sleep(1)
+	time.sleep(1)
 
 	port.write("AT+CIICR\r\n".encode())
-	sleep(1)
+	time.sleep(1)
 
 	port.write("AT+CIFSR\r\n".encode())
-	sleep(1)
+	time.sleep(1)
 
 	port.write("AT+CIPSTART=\"TCP\",\"35.162.236.171\",\"8883\"\r\n".encode())
-	sleep(1)
+	time.sleep(1)
 
 	port.write("AT+CIPSEND\r\n".encode())
-	sleep(1)
+	time.sleep(1)
 
 	port.write(connect_pack.encode())
-	sleep(1)
+	time.sleep(1)
 
 	port.write(message_package.upper().encode())
-	sleep(1)
+	time.sleep(1)
 
 	port.write("AT+CIPCLOSE\r\n".encode())
-	sleep(1)
+	time.sleep(1)
 
 	#port.close()
 	#====================NBIOT======================#
