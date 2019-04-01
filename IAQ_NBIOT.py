@@ -67,7 +67,7 @@ def upload_data():
 	#print("msg:",msg)
 	#====================NBIOT======================#
 	msg = prifix + msg
-	payload_len = len(prifix+publish_pack) #remember to add tpoic length (2 byte in this case)
+	payload_len = len(msg) #remember to add tpoic length (2 byte in this case)
 	payload_len = payload_len + 2
 
 	#MQTT Remaining Length calculate
@@ -82,7 +82,7 @@ def upload_data():
 	    b = b.zfill(2)
 	    payload_len_hex = str(a) + " " +  str(b)	
 
-	a = formatStrToInt(prifix+publish_pack)
+	a = formatStrToInt(msg)
 
 	add_on = "30 " + str(payload_len_hex.upper()) +" 00 1E "
 	end_line = "1A"
