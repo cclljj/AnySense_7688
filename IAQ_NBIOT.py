@@ -32,7 +32,12 @@ def formatStrToInt(target):
         #print(temp,)
     return kit
 
-connect_pack = "10 22 00 06 4D 51 49 73 64 70 03 C2 00 3C 00 06 41 42 43 44 45 46 00 04 6D 61 70 73 00 06 69 69 73 6E 72 6C " #fix value for now / remember to change
+#connect_pack = "10 22 00 06 4D 51 49 73 64 70 03 C2 00 3C 00 06 41 42 43 44 45 46 00 04 6D 61 70 73 00 06 69 69 73 6E 72 6C " #fix value for now / remember to change
+connect_pack_pre = "10 28 00 06 4D 51 49 73 64 70 03 C2 00 3C 00 0C "
+Client_ID = formatStrToInt(Conf.DEVICE_ID)
+connect_pack_post = " 00 04 6D 61 70 73 00 06 69 69 73 6E 72 6C "
+connect_pack = connect_pack_pre + Client_ID + connect_pack_post
+
 prifix = "MAPS/IAQ_TW/NBIOT/"+Conf.DEVICE_ID
 #====================NBIOT======================#
 
