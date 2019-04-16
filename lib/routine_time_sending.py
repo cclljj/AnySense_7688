@@ -35,39 +35,41 @@ cycle = 0
 prifix = "MAPS/IAQ_TW/NBIOT/"+DEVICE_ID
 
 
-#====================NBIOT======================#
-msg = "This is:" + str(cycle) + " cycle."
-
-msg = prifix + msg
-payload_len = len(msg) #remember to add tpoic length (2 byte in this case)
-payload_len = payload_len + 2
-#MQTT Remaining Length calculate
-#currently support range 0~16383(1~2 byte)
-if(payload_len<128):
-    payload_len_hex = hex(payload_len).split('x')[-1]
-else:
-    a = payload_len % 128
-    b = payload_len // 128
-    a = hex(a+128).split('x')[-1]
-    b = hex(b).split('x')[-1]
-    b = b.zfill(2)
-    payload_len_hex = str(a) + " " +  str(b)	
-
-a = formatStrToInt(msg)
-
-add_on = "30 " + str(payload_len_hex.upper()) +" 00 1E "
-end_line = "1A"
-message_package = add_on + a + end_line
-
-
 #===Start regular event===
 def fn():
     global cycle
-    global msg
+    #global msg
     
+    #====================NBIOT======================#
+    msg = "This is:" + str(cycle) + " cycle."
+
+    msg = prifix + msg
+    payload_len = len(msg) #remember to add tpoic length (2 byte in this case)
+    payload_len = payload_len + 2
+    #MQTT Remaining Length calculate
+    #currently support range 0~16383(1~2 byte)
+    if(payload_len<128):
+        payload_len_hex = hex(payload_len).split('x')[-1]
+    else:
+        a = payload_len % 128
+        b = payload_len // 128
+        a = hex(a+128).split('x')[-1]
+        b = hex(b).split('x')[-1]
+        b = b.zfill(2)
+        payload_len_hex = str(a) + " " +  str(b)    
+
+    a = formatStrToInt(msg)
+
+    add_on = "30 " + str(payload_len_hex.upper()) +" 00 1E "
+    end_line = "1A"
+    message_package = add_on + a + end_line
+
+    #===Timer===#
+
     print("Start T:",time.time())
     print('Thread number{}'.format(thd.activeCount()))
-    thd.Timer(300,fn).start()
+    thd.Timer(30,fn).start()
+    #===Timer===#
 
     port.write("AT+CIPCLOSE\r".encode())
     time.sleep(1)
