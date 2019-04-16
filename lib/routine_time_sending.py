@@ -68,7 +68,7 @@ def fn():
 
     print("Start T:",time.time())
     print('Thread number{}'.format(thd.activeCount()))
-    thd.Timer(30,fn).start()
+    thd.Timer(300,fn).start()
     #===Timer===#
 
     port.write("AT+CIPCLOSE\r".encode())
