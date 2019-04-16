@@ -63,6 +63,7 @@ message_package = add_on + a + end_line
 #===Start regular event===
 def fn():
     global cycle
+    global msg
     
     print("Start T:",time.time())
     print('Thread number{}'.format(thd.activeCount()))
@@ -101,5 +102,6 @@ def fn():
     cycle = cycle + 1
 
     print("done")
+    print("msg is:",msg)
     
 fn()
