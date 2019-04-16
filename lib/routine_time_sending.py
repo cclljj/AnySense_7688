@@ -1,5 +1,6 @@
 import threading as thd
 import time
+import serial
 
 
 mac = open('/sys/class/net/eth0/address').readline().upper().strip()
@@ -17,6 +18,7 @@ def formatStrToInt(target):
 
 #===Start here===
 try:
+    print("I'm here")
     port = serial.Serial("/dev/ttyUSB0",baudrate=57600, timeout=3.0)
     sigfox_flag = " "
 except:
