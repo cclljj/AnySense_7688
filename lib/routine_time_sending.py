@@ -105,5 +105,8 @@ def fn():
 
     print("done")
     print("msg is:",msg)
-    
+    print("connect_pack:",connect_pack)
+    print("message_package:",message_package)
+
+
 fn()
