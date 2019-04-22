@@ -14,7 +14,7 @@ Sense_Light = 1
 Sense_Gas = 1
 Use_RTC_DS3231 = 1
 #for TVOC
-Sense_TVOC = 1
+Sense_TVOC = 0
 
 GPS_LAT = 25.1933
 GPS_LON = 121.7870
