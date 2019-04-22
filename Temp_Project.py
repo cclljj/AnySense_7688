@@ -71,31 +71,34 @@ def display_data(disp):
 
 	#change Temperature and Humidity display to > [T: 23C / RH: 75%]
 	disp.setCursor(3,0)
-	disp.write('{:16}'.format('T: %dC / RH: %d%%' % (values["s_t0"],values["s_h0"])))
+	disp.write('{:16}'.format('Temp: %.2fC' % values["s_t0"]))
+	#disp.write('{:16}'.format('T: %dC / RH: %d%%' % (values["s_t0"],values["s_h0"])))
 	#
+	disp.setCursor(4,0)                                                                
+    disp.write('{:16}'.format('  RH: %.2f%%' % values["s_h0"]))
 
 	#PM2.5 display [PM2.5: 13ug/m3]
-	disp.setCursor(4,0)
+	disp.setCursor(5,0)
 	disp.write('{:16}'.format('PM2.5: %dug/m3' % values["s_d0"]))
 	
 
 	#add CO2 display
-	disp.setCursor(5,0)
+	disp.setCursor(6,0)
 	disp.write('{:16}'.format('CO2: %dppm' % values["s_g8"]))
 	#
 
 	#change Light to TVOC display
 	#disp.setCursor(5,0)
 	#disp.write('{:16}'.format('Light: %dLux' % values["s_l0"]))
-	if(values["s_gg"] == 65535):
-		disp.setCursor(6,0)
-		temp = '{:16}'.format('                ')
-		disp.write(temp)
-		
-	else:
-		disp.setCursor(6,0)
-		temp = '{:16}'.format('TVOC: %dppb' % values["s_gg"])
-		disp.write(temp)
+	#if(values["s_gg"] == 65535):
+	#	disp.setCursor(6,0)
+	#	temp = '{:16}'.format('                ')
+	#	disp.write(temp)
+	#	
+	#else:
+	#	disp.setCursor(6,0)
+	#	temp = '{:16}'.format('TVOC: %dppb' % values["s_gg"])
+	#	disp.write(temp)
 	#
 
 	disp.setCursor(7,0)
