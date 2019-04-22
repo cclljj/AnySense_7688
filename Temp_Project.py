@@ -75,7 +75,7 @@ def display_data(disp):
 	#disp.write('{:16}'.format('T: %dC / RH: %d%%' % (values["s_t0"],values["s_h0"])))
 	#
 	disp.setCursor(4,0)                                                                
-    disp.write('{:16}'.format('  RH: %.2f%%' % values["s_h0"]))
+	disp.write('{:16}'.format('  RH: %.2f%%' % values["s_h0"]))
 
 	#PM2.5 display [PM2.5: 13ug/m3]
 	disp.setCursor(5,0)
