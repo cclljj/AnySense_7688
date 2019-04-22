@@ -130,7 +130,7 @@ def display_data(disp):
     disp.write('{:16}'.format("Time: " + pairs[1]))
     
     disp.setCursor(3,0)                                                                                                                              
-    disp.write('{:16}'.format('Temp: %.2fF' % ((values["s_t0"]*1.8)+32)))
+    disp.write('{:16}'.format('Temp: %.2fC' % values["s_t0"]))  #change back to C  
     
     disp.setCursor(4,0)                                                                
     disp.write('{:16}'.format('  RH: %.2f%%' % values["s_h0"]))
