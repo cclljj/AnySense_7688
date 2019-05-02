@@ -93,6 +93,9 @@ def upload_data():
 	#open a debug file 
 	dbug_f = open('/root/payload_debug.txt', "a")
 	debug_msg = ""
+	port.flushInput()
+	port.flushOutput()
+	time.sleep(1)
 
 	add_on = "30 " + str(payload_len_hex.upper()) +" 00 1E "
 	end_line = "1A"
@@ -161,6 +164,9 @@ def upload_data():
 	dbug_f.write("===============================\n")
 	debug_msg = ""
 	dbug_f.close()
+
+	port.flushInput()
+	port.flushOutput()
 
 	#port.close()
 	#====================NBIOT======================#
