@@ -71,6 +71,7 @@ def upload_data():
 
 	#print("msg:",msg)
 	#====================NBIOT======================#
+
 	msg = prifix + msg
 	payload_len = len(msg) #remember to add tpoic length (2 byte in this case)
 	payload_len = payload_len + 2
@@ -89,40 +90,67 @@ def upload_data():
 
 	a = formatStrToInt(msg)
 
+	#open a debug file 
+	dbug_f = open('/root/payload_debug.txt', "a")
+	debug_msg = ""
+
 	add_on = "30 " + str(payload_len_hex.upper()) +" 00 1E "
 	end_line = "1A"
 	message_package = add_on + a + end_line
 
-	port.write("AT+CIPCLOSE\r".encode())
+	port.write("AT+CIPCLOSE\r\n".encode())
+	debug_msg = debug_msg + "AT+CIPCLOSE\r\n"
+	debug_msg = debug_msg + port.readline()
 	time.sleep(1)
 
 	port.write("AT+CIPSENDHEX=1\r\n".encode())
+	debug_msg = debug_msg + "AT+CIPSENDHEX=1\r\n"
+	debug_msg = debug_msg + port.readline()
 	time.sleep(1)
 
 	port.write("AT+CSTT=\"nbiot\"\r\n".encode())
+	debug_msg = debug_msg + "AT+CSTT=\"nbiot\"\r\n"
+	debug_msg = debug_msg + port.readline()
 	time.sleep(1)
 
 	port.write("AT+CIICR\r\n".encode())
+	debug_msg = debug_msg + "AT+CIICR\r\n"
+	debug_msg = debug_msg + port.readline()
 	time.sleep(1)
 
 	port.write("AT+CIFSR\r\n".encode())
+	debug_msg = debug_msg + "AT+CIFSR\r\n"
+	debug_msg = debug_msg + port.readline()
 	time.sleep(1)
 
 	port.write("AT+CIPSTART=\"TCP\",\"35.162.236.171\",\"8883\"\r\n".encode())
+	debug_msg = debug_msg + "AT+CIPSTART=\"TCP\",\"35.162.236.171\",\"8883\"\r\n"
+	debug_msg = debug_msg + port.readline()
 	time.sleep(1)
 
 	port.write("AT+CIPSEND\r\n".encode())
+	debug_msg = debug_msg + "AT+CIPSEND\r\n"
+	debug_msg = debug_msg + port.readline()
 	time.sleep(1)
 
 	port.write(connect_pack.encode())
+	debug_msg = debug_msg + connect_pack
+	debug_msg = debug_msg + port.readline()
 	time.sleep(1)
 
 	port.write(message_package.upper().encode())
+	debug_msg = debug_msg + message_package
+	debug_msg = debug_msg + port.readline()
 	time.sleep(1)
 
 	port.write("AT+CIPCLOSE\r\n".encode())
+	debug_msg = debug_msg + "AT+CIPCLOSE\r\n"
+	debug_msg = debug_msg + port.readline()
 	time.sleep(1)
 
+	dbug_f.write(debug_msg + "\n")
+	dbug_f.close()
+	
 	#port.close()
 	#====================NBIOT======================#
 
