@@ -149,8 +149,9 @@ def upload_data():
 	time.sleep(1)
 
 	dbug_f.write(debug_msg + "\n")
+	debug_msg = ""
 	dbug_f.close()
-	
+
 	#port.close()
 	#====================NBIOT======================#
 
