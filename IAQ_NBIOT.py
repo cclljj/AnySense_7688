@@ -98,57 +98,69 @@ def upload_data():
 	end_line = "1A"
 	message_package = add_on + a + end_line
 
+	debug_msg = debug_msg + "===============================\n"
 	port.write("AT+CIPCLOSE\r\n".encode())
 	debug_msg = debug_msg + "AT+CIPCLOSE\r\n"
 	debug_msg = debug_msg + port.readline()
+	debug_msg = debug_msg + "---------------\n"
 	time.sleep(1)
 
 	port.write("AT+CIPSENDHEX=1\r\n".encode())
 	debug_msg = debug_msg + "AT+CIPSENDHEX=1\r\n"
 	debug_msg = debug_msg + port.readline()
+	debug_msg = debug_msg + "---------------\n"
 	time.sleep(1)
 
 	port.write("AT+CSTT=\"nbiot\"\r\n".encode())
 	debug_msg = debug_msg + "AT+CSTT=\"nbiot\"\r\n"
 	debug_msg = debug_msg + port.readline()
+	debug_msg = debug_msg + "---------------\n"
 	time.sleep(1)
 
 	port.write("AT+CIICR\r\n".encode())
 	debug_msg = debug_msg + "AT+CIICR\r\n"
 	debug_msg = debug_msg + port.readline()
+	debug_msg = debug_msg + "---------------\n"
 	time.sleep(1)
 
 	port.write("AT+CIFSR\r\n".encode())
 	debug_msg = debug_msg + "AT+CIFSR\r\n"
 	debug_msg = debug_msg + port.readline()
+	debug_msg = debug_msg + "---------------\n"
 	time.sleep(1)
 
 	port.write("AT+CIPSTART=\"TCP\",\"35.162.236.171\",\"8883\"\r\n".encode())
 	debug_msg = debug_msg + "AT+CIPSTART=\"TCP\",\"35.162.236.171\",\"8883\"\r\n"
 	debug_msg = debug_msg + port.readline()
+	debug_msg = debug_msg + "---------------\n"
 	time.sleep(1)
 
 	port.write("AT+CIPSEND\r\n".encode())
 	debug_msg = debug_msg + "AT+CIPSEND\r\n"
 	debug_msg = debug_msg + port.readline()
+	debug_msg = debug_msg + "---------------\n"
 	time.sleep(1)
 
 	port.write(connect_pack.encode())
 	debug_msg = debug_msg + connect_pack
 	debug_msg = debug_msg + port.readline()
+	debug_msg = debug_msg + "---------------\n"
 	time.sleep(1)
 
 	port.write(message_package.upper().encode())
 	debug_msg = debug_msg + message_package
-	debug_msg = debug_msg + port.readline()
+	debug_msg = debug_msg + port.readline() + "\n"
+	debug_msg = debug_msg + "---------------\n"
 	time.sleep(1)
 
 	port.write("AT+CIPCLOSE\r\n".encode())
 	debug_msg = debug_msg + "AT+CIPCLOSE\r\n"
 	debug_msg = debug_msg + port.readline()
+	debug_msg = debug_msg + "---------------\n"
 	time.sleep(1)
 
 	dbug_f.write(debug_msg + "\n")
+	dbug_f.write("===============================\n")
 	debug_msg = ""
 	dbug_f.close()
 
