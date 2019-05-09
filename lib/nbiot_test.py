@@ -117,22 +117,22 @@ print(data)
 
 
 ser.write('AT+CSTT=\"nbiot\"\r'.encode())
-sleep(1)
+sleep(5)
 data = ser.readline().decode()
 print(data)
 
 ser.write("AT+CIICR\r".encode())
-sleep(1)
+sleep(3)
 data = ser.readline().decode()
 print(data)
 
 ser.write("AT+CIFSR\r".encode())
-sleep(1)
+sleep(3)
 data = ser.readline().decode()
 print(data)
 
 ser.write("AT+CIPSTART=\"TCP\",\"35.162.236.171\",\"8883\"\r".encode())
-sleep(1)
+sleep(3)
 
 #data = ser.read_until("CONNECT OK").decode()
 data = ser.readline().decode()
@@ -146,13 +146,13 @@ print(data)
 
 ser.write(connect_pack.encode())
 #ser.write("\r\n".encode())
-sleep(1)
+sleep(2)
 #data = ser.readline()
 #print(data)
 
 ser.write(message_package.upper().encode())
 #ser.write("\r\n".encode())
-sleep(1)
+sleep(5)
 data = ser.readline().decode()
 print(data)
 
