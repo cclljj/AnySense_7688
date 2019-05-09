@@ -101,45 +101,45 @@ ser=serial.Serial("/dev/ttyUSB0",baudrate=57600, timeout=1)
 print("===========?===============")
 
 ser.write("AT\r".encode())
-#sleep(1)
+sleep(1)
 data = ser.readline().decode()
 print(data)
 
 ser.write("AT+CIPCLOSE\r".encode())
-#sleep(1)
+sleep(1)
 data = ser.readline().decode()
 print(data)
 
 ser.write("AT+CIPSENDHEX=1\r".encode())
-#sleep(1)
+sleep(1)
 data = ser.readline().decode()
 print(data)
 
 
 ser.write('AT+CSTT=\"nbiot\"\r'.encode())
-#sleep(1)
+sleep(1)
 data = ser.readline().decode()
 print(data)
 
 ser.write("AT+CIICR\r".encode())
-#sleep(1)
+sleep(1)
 data = ser.readline().decode()
 print(data)
 
 ser.write("AT+CIFSR\r".encode())
-#sleep(1)
+sleep(1)
 data = ser.readline().decode()
 print(data)
 
 ser.write("AT+CIPSTART=\"TCP\",\"35.162.236.171\",\"8883\"\r".encode())
-#sleep(1)
+sleep(1)
 
 #data = ser.read_until("CONNECT OK").decode()
 data = ser.readline().decode()
 print(data)
 
 ser.write("AT+CIPSEND\r".encode())
-#sleep(1)
+sleep(1)
 #data = ser.read_until("SEND OK").decode()
 data = ser.readline().decode()
 print(data)
