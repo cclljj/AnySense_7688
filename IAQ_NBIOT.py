@@ -16,7 +16,7 @@ values = Conf.values
 
 #for NBIOT 
 try:
-    port = serial.Serial("/dev/ttyUSB0",baudrate=57600, timeout=3.0)
+    port = serial.Serial("/dev/ttyUSB0",baudrate=57600, timeout=1)
     sigfox_flag = " "
 except:
     print "there is no NBIOT on the board!!!"
@@ -92,7 +92,7 @@ def upload_data():
 
 	#open a debug file 
 	dbug_f = open('/root/payload_debug.txt', "a")
-	debug_msg = ""
+	#debug_msg = ""
 	port.flushInput()
 	port.flushOutput()
 	time.sleep(1)
@@ -101,68 +101,62 @@ def upload_data():
 	end_line = "1A"
 	message_package = add_on + a + end_line
 
-	debug_msg = debug_msg + "===============================\n"
-	port.write("AT+CIPCLOSE\r\n".encode())
-	debug_msg = debug_msg + "*AT+CIPCLOSE\r\n"
-	debug_msg = debug_msg + port.readline() + "respond 1\n"
-	debug_msg = debug_msg + "---------------\n"
-	time.sleep(3)
+	dbug_f.write("===============================\n")
+	port.write("AT\r".encode())
+	dbug_f.write("AT\n")
+	dbug_f.write(port.readline().decode())
+	dbug_f.write("---------------\n")
 
-	port.write("AT+CIPSENDHEX=1\r\n".encode())
-	debug_msg = debug_msg + "*AT+CIPSENDHEX=1\r\n"
-	debug_msg = debug_msg + port.readline() + "respond 2\n"
-	debug_msg = debug_msg + "---------------\n"
-	time.sleep(3)
+	port.write("AT+CIPCLOSE\r".encode())
+	dbug_f.write("AT+CIPCLOSE\r\n")
+	dbug_f.write(port.readline().decode())
+	dbug_f.write("---------------\n")
 
-	port.write("AT+CSTT=\"nbiot\"\r\n".encode())
-	debug_msg = debug_msg + "*AT+CSTT=\"nbiot\"\r\n"
-	debug_msg = debug_msg + port.readline() + "respond 3\n"
-	debug_msg = debug_msg + "---------------\n"
-	time.sleep(3)
+	port.write("AT+CIPSENDHEX=1\r".encode())
+	dbug_f.write("AT+CIPSENDHEX=1\r\n")
+	dbug_f.write(port.readline().decode())
+	dbug_f.write("---------------\n")
 
-	port.write("AT+CIICR\r\n".encode())
-	debug_msg = debug_msg + "*AT+CIICR\r\n"
-	debug_msg = debug_msg + port.readline() + "respond 4\n"
-	debug_msg = debug_msg + "---------------\n"
-	time.sleep(3)
+	port.write("AT+CSTT=\"nbiot\"\r".encode())
+	dbug_f.write("AT+CSTT=\"nbiot\"\r\n")
+	dbug_f.write(port.readline().decode())
+	dbug_f.write("---------------\n")
 
-	port.write("AT+CIFSR\r\n".encode())
-	debug_msg = debug_msg + "*AT+CIFSR\r\n"
-	debug_msg = debug_msg + port.readline() + "respond 5\n"
-	debug_msg = debug_msg + "---------------\n"
-	time.sleep(3)
+	port.write("AT+CIICR\r".encode())
+	dbug_f.write("AT+CIICR\r\n")
+	dbug_f.write(port.readline().decode())
+	dbug_f.write("---------------\n")
 
-	port.write("AT+CIPSTART=\"TCP\",\"35.162.236.171\",\"8883\"\r\n".encode())
-	debug_msg = debug_msg + "*AT+CIPSTART=\"TCP\",\"35.162.236.171\",\"8883\"\r\n"
-	debug_msg = debug_msg + port.readline() + "respond 6\n"
-	debug_msg = debug_msg + "---------------\n"
-	time.sleep(3)
+	port.write("AT+CIFSR\r".encode())
+	dbug_f.write("AT+CIFSR\r\n")
+	dbug_f.write(port.readline().decode())
+	dbug_f.write("---------------\n")
 
-	port.write("AT+CIPSEND\r\n".encode())
-	debug_msg = debug_msg + "*AT+CIPSEND\r\n"
-	debug_msg = debug_msg + port.readline()  + "respond 7\n"
-	debug_msg = debug_msg + "---------------\n"
-	time.sleep(3)
+	port.write("AT+CIPSTART=\"TCP\",\"35.162.236.171\",\"8883\"\r".encode())
+	dbug_f.write("AT+CIPSTART=\"TCP\",\"35.162.236.171\",\"8883\"\r\n")
+	dbug_f.write(port.readline().decode())
+	dbug_f.write("---------------\n")
+
+	port.write("AT+CIPSEND\r".encode())
+	dbug_f.write("AT+CIPSEND\r\n")
+	dbug_f.write(port.readline().decode())
+	dbug_f.write("---------------\n")
 
 	port.write(connect_pack.encode())
-	debug_msg = debug_msg + connect_pack
-	debug_msg = debug_msg + "\n---------------\n"
-	time.sleep(3)
+	dbug_f.write(connect_pack.encode())
+	dbug_f.write("---------------\n")
 
 	port.write(message_package.upper().encode())
-	debug_msg = debug_msg + message_package
-	debug_msg = debug_msg + "\n---------------\n"
-	time.sleep(3)
+	dbug_f.write(message_package.upper().encode())
+	dbug_f.write("\n---------------\n")
 
-	port.write("AT+CIPCLOSE\r\n".encode())
-	debug_msg = debug_msg + "*AT+CIPCLOSE\r\n"
-	debug_msg = debug_msg + port.readline() + "respond 8\n"
-	debug_msg = debug_msg + "---------------\n"
-	time.sleep(3)
+	port.write("AT+CIPCLOSE\r".encode())
+	dbug_f.write("AT+CIPCLOSE\r\n")
+	dbug_f.write(port.readline().decode())
+	dbug_f.write("---------------\n")
 
-	dbug_f.write(debug_msg + "\n")
 	dbug_f.write("===============================\n")
-	debug_msg = ""
+	#debug_msg = ""
 	dbug_f.close()
 
 	port.flushInput()
