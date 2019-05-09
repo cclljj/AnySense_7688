@@ -134,12 +134,14 @@ print(data)
 ser.write("AT+CIPSTART=\"TCP\",\"35.162.236.171\",\"8883\"\r".encode())
 #sleep(1)
 
-data = ser.read_until("CONNECT OK").decode()
+#data = ser.read_until("CONNECT OK").decode()
+data = ser.readline().decode()
 print(data)
 
 ser.write("AT+CIPSEND\r".encode())
 #sleep(1)
-data = ser.read_until("SEND OK").decode()
+#data = ser.read_until("SEND OK").decode()
+data = ser.readline().decode()
 print(data)
 
 ser.write(connect_pack.encode())
