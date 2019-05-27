@@ -155,6 +155,11 @@ def upload_data():
 	dbug_f.write(port.readline().decode())
 	dbug_f.write("---------------\n")
 
+	port.write("AT+CIPSHUT\r".encode())
+	dbug_f.write("AT+CIPSHUT\r\n")
+	dbug_f.write(port.readline().decode())
+	dbug_f.write("---------------\n")
+
 	dbug_f.write("===============================\n")
 	#debug_msg = ""
 	dbug_f.close()

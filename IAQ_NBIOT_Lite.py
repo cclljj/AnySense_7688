@@ -126,6 +126,9 @@ def upload_data():
 	port.write("AT+CIPCLOSE\r\n".encode())
 	time.sleep(1)
 
+	port.write("AT+CIPSHUT\r\n".encode())
+	time.sleep(1)
+
 	#port.close()
 	#====================NBIOT======================#
 
