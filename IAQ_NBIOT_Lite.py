@@ -72,7 +72,7 @@ def upload_data():
 	#print("msg:",msg)
 	#====================NBIOT======================#
 	msg = ""
-	msg = "|gps_lat="+str(values["gps_lat"])+"|s_t0="+str(values["s_t0"])+"|app="+str(values["app"])+"|s_lr="+str(values["s_lr"])+"|s_l0="+str(values["s_l0"])+"|date="+str(values["date"])+"|s_d2="+str(values["s_d2"])+"|s_d0="+str(values["s_d0"])+"|s_d1="+str(values["s_d1"])+"|s_lg="+str(values["s_lg"])+"|s_h0="+str(values["s_h0"])+"|s_lb="+str(values["s_lb"])+"|s_lc="+str(values["s_lc"])+"|device_id="+str(values["device_id"])+"|s_g8="+str(values["s_g8"])+"|gps_lon="+str(values["gps_lon"])+"|time="+str(values["time"])
+	msg = "|gps_lat="+str(values["gps_lat"])+"|s_t0="+str(values["s_t0"])+"|app="+str(values["app"])+"|s_lr="+str(values["s_lr"])+"|date="+str(values["date"])+"|s_d2="+str(values["s_d2"])+"|s_d0="+str(values["s_d0"])+"|s_d1="+str(values["s_d1"])+"|s_lg="+str(values["s_lg"])+"|s_h0="+str(values["s_h0"])+"|s_lb="+str(values["s_lb"])+"|s_lc="+str(values["s_lc"])+"|device_id="+str(values["device_id"])+"|s_g8="+str(values["s_g8"])+"|gps_lon="+str(values["gps_lon"])+"|ver_app="+str(values["ver_app"])+"|time="+str(values["time"])
 	print("msg_for_nbiot:",msg)
 	msg = prifix + msg
 	payload_len = len(msg) #remember to add tpoic length (2 byte in this case)
