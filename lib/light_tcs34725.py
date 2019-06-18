@@ -125,6 +125,7 @@ class sensor(Process):
 		#R = R * 256 / C
 		#G = G * 256 / C
 		#B = B * 256 / C
+		L = L * 256 / C
 
 		if TCS34725_INTEGRATIONTIME == 0xFF:
 			time.sleep(0.003)
