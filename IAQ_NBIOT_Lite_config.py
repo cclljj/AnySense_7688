@@ -1,24 +1,22 @@
 import lib.pm_g3 as pm_sensor
 import lib.th_htu21d as tmp_sensor
 import lib.light_tcs34725 as light_sensor
-import lib.gas_tvoc_sgp30 as TVOC_sensor
+#import gas_tvoc_sgp30 as gas_sensor
 import lib.gas_co2_s8 as gas_sensor
 import pyupm_i2clcd as upmLCD
 
 
-Version = "5.2b.1"
+Version = "5.2b.6"
 
 Sense_PM = 1                          
 Sense_Tmp = 1
 Sense_Light = 1
 Sense_Gas = 1
 Use_RTC_DS3231 = 1
-#for TVOC
-Sense_TVOC = 0
 
 GPS_LAT = 25.1933
 GPS_LON = 121.7870
-APP_ID = "IAQ_SPECIAL"
+APP_ID = "IAQ_TW/NBIOT"
 DEVICE = "LinkIt_Smart_7688"
 DEVICE_ID = "DEVICE_ID1234"
 DEVICE_IP = ''
@@ -26,7 +24,7 @@ DEVICE_IP = ''
 Interval_LCD = 5
 
 Restful_URL = "https://data.lass-net.org/Upload/MAPS-secure.php?"
-Restful_interval = 60			# 60 seconds
+Restful_interval = 300			# 300 seconds
 
 SecureKey = "NoKey"
 
@@ -51,7 +49,6 @@ DEVICE_IP=f.read()
 if(DEVICE_IP == ''):
         f = os.popen('ifconfig apcli0 | grep "inet\ addr" | cut -d: -f2 | cut -d" " -f1')
         DEVICE_IP=f.read()    
-
 
 if Use_RTC_DS3231 == 1:
 	import mraa

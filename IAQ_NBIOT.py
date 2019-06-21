@@ -3,16 +3,47 @@ import time
 import string
 import os
 import subprocess
+import serial
 
 from datetime import datetime
 
-import Temp_Project_config as Conf
+import IAQ_NBIOT_config as Conf
 
 fields = Conf.fields
 values = Conf.values
 
+#====================NBIOT======================#
+
+#for NBIOT 
+try:
+    port = serial.Serial("/dev/ttyUSB0",baudrate=57600, timeout=1)
+    sigfox_flag = " "
+except:
+    print "there is no NBIOT on the board!!!"
+    sigfox_flag = "!"
+#
+
+def formatStrToInt(target):
+    kit = ""
+    for i in range(len(target)):
+        temp=ord(target[i])
+        temp=hex(temp)[2:]
+        kit=kit+str(temp)+" "
+        #print(temp,)
+    return kit
+
+#connect_pack = "10 22 00 06 4D 51 49 73 64 70 03 C2 00 3C 00 06 41 42 43 44 45 46 00 04 6D 61 70 73 00 06 69 69 73 6E 72 6C " #fix value for now / remember to change
+connect_pack_pre = "10 28 00 06 4D 51 49 73 64 70 03 C2 00 3C 00 0C "
+Client_ID = formatStrToInt(Conf.DEVICE_ID)
+connect_pack_post = " 00 04 6D 61 70 73 00 06 69 69 73 6E 72 6C "
+connect_pack = connect_pack_pre + Client_ID + connect_pack_post
+
+prifix = "MAPS/IAQ_TW/NBIOT/"+Conf.DEVICE_ID
+#====================NBIOT======================#
+
+
 def upload_data():
-	CSV_items = ['device_id','date','time','s_t0','s_h0','s_d0','s_d1','s_d2','s_lr','s_lg','s_lb','s_lc', 's_l0', 's_g8','s_gg']
+	CSV_items = ['device_id','date','time','s_t0','s_h0','s_d0','s_d1','s_d2','s_lr','s_lg','s_lb','s_lc', 's_l0', 's_g8']
 	pairs = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S").split(" ")
 	values["device_id"] = Conf.DEVICE_ID
 	values["ver_app"] = Conf.Version
@@ -38,6 +69,107 @@ def upload_data():
 	restful_str = "wget -O /tmp/last_upload.log \"" + Conf.Restful_URL + "topic=" + Conf.APP_ID + "&device_id=" + Conf.DEVICE_ID + "&key=" + Conf.SecureKey + "&msg=" + msg + "\""
 	os.system(restful_str)
 
+	#print("msg:",msg)
+	#====================NBIOT======================#
+
+	msg = prifix + msg
+	payload_len = len(msg) #remember to add tpoic length (2 byte in this case)
+	payload_len = payload_len + 2
+
+	#MQTT Remaining Length calculate
+	#currently support range 0~16383(1~2 byte)
+	if(payload_len<128):
+	    payload_len_hex = hex(payload_len).split('x')[-1]
+	else:
+	    a = payload_len % 128
+	    b = payload_len // 128
+	    a = hex(a+128).split('x')[-1]
+	    b = hex(b).split('x')[-1]
+	    b = b.zfill(2)
+	    payload_len_hex = str(a) + " " +  str(b)	
+
+	a = formatStrToInt(msg)
+
+	#open a debug file 
+	dbug_f = open('/root/payload_debug.txt', "a")
+	#debug_msg = ""
+	port.flushInput()
+	port.flushOutput()
+	time.sleep(1)
+
+	add_on = "30 " + str(payload_len_hex.upper()) +" 00 1E "
+	end_line = "1A"
+	message_package = add_on + a + end_line
+
+	dbug_f.write("===============================\n")
+	port.write("AT\r".encode())
+	dbug_f.write("AT\n")
+	dbug_f.write(port.readline().decode())
+	dbug_f.write("---------------\n")
+
+	port.write("AT+CIPCLOSE\r".encode())
+	dbug_f.write("AT+CIPCLOSE\r\n")
+	dbug_f.write(port.readline().decode())
+	dbug_f.write("---------------\n")
+
+	port.write("AT+CIPSENDHEX=1\r".encode())
+	dbug_f.write("AT+CIPSENDHEX=1\r\n")
+	dbug_f.write(port.readline().decode())
+	dbug_f.write("---------------\n")
+
+	port.write("AT+CSTT=\"nbiot\"\r".encode())
+	dbug_f.write("AT+CSTT=\"nbiot\"\r\n")
+	dbug_f.write(port.readline().decode())
+	dbug_f.write("---------------\n")
+
+	port.write("AT+CIICR\r".encode())
+	dbug_f.write("AT+CIICR\r\n")
+	dbug_f.write(port.readline().decode())
+	dbug_f.write("---------------\n")
+
+	port.write("AT+CIFSR\r".encode())
+	dbug_f.write("AT+CIFSR\r\n")
+	dbug_f.write(port.readline().decode())
+	dbug_f.write("---------------\n")
+
+	port.write("AT+CIPSTART=\"TCP\",\"35.162.236.171\",\"8883\"\r".encode())
+	dbug_f.write("AT+CIPSTART=\"TCP\",\"35.162.236.171\",\"8883\"\r\n")
+	dbug_f.write(port.readline().decode())
+	dbug_f.write("---------------\n")
+
+	port.write("AT+CIPSEND\r".encode())
+	dbug_f.write("AT+CIPSEND\r\n")
+	dbug_f.write(port.readline().decode())
+	dbug_f.write("---------------\n")
+
+	port.write(connect_pack.encode())
+	dbug_f.write(connect_pack.encode())
+	dbug_f.write("---------------\n")
+
+	port.write(message_package.upper().encode())
+	dbug_f.write(message_package.upper().encode())
+	dbug_f.write("\n---------------\n")
+
+	port.write("AT+CIPCLOSE\r".encode())
+	dbug_f.write("AT+CIPCLOSE\r\n")
+	dbug_f.write(port.readline().decode())
+	dbug_f.write("---------------\n")
+
+	port.write("AT+CIPSHUT\r".encode())
+	dbug_f.write("AT+CIPSHUT\r\n")
+	dbug_f.write(port.readline().decode())
+	dbug_f.write("---------------\n")
+
+	dbug_f.write("===============================\n")
+	#debug_msg = ""
+	dbug_f.close()
+
+	port.flushInput()
+	port.flushOutput()
+
+	#port.close()
+	#====================NBIOT======================#
+
 	msg = ""
 	for item in CSV_items:
 		if item in values:
@@ -56,58 +188,26 @@ def display_data(disp):
 	pairs = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S").split(" ")
 	disp.setCursor(0,0)
 	disp.write('{:16}'.format("ID: " + Conf.DEVICE_ID))
-	disp.setCursor(1,0)
-	disp.write('{:16}'.format("Date: " + pairs[0]))
-	disp.setCursor(2,0)
-	disp.write('{:16}'.format("Time: " + pairs[1]))
-	
-	#original display
-	#
-	#disp.setCursor(3,0)
-	#disp.write('{:16}'.format('Temp: %.2fF' % ((values["s_t0"]*1.8)+32)))
-	#disp.setCursor(4,0)
-	#disp.write('{:16}'.format('  RH: %.2f%%' % values["s_h0"]))
-	#
-
-	#change Temperature and Humidity display to > [T: 23C / RH: 75%]
-	disp.setCursor(3,0)
-	disp.write('{:16}'.format('Temp: %.2fC' % values["s_t0"]))
-	#disp.write('{:16}'.format('T: %dC / RH: %d%%' % (values["s_t0"],values["s_h0"])))
-	#
+        disp.setCursor(1,0)                                                                
+        disp.write('{:16}'.format("Date: " + pairs[0]))
+	disp.setCursor(2,0)                                                                
+        disp.write('{:16}'.format("Time: " + pairs[1]))
+	disp.setCursor(3,0)                                                                                                                              
+        disp.write('{:16}'.format('Temp: %.2fC' % values["s_t0"]))
 	disp.setCursor(4,0)                                                                
-	disp.write('{:16}'.format('  RH: %.2f%%' % values["s_h0"]))
+        disp.write('{:16}'.format('  RH: %.2f%%' % values["s_h0"]))
+	disp.setCursor(5,0)                                                                                                            
+        disp.write('{:16}'.format('PM2.5: %dug/m3' % values["s_d0"]))
+	disp.setCursor(6,0)                                                                                                            
+        disp.write('{:16}'.format('Light: %dLux' % values["s_l0"]))
 
-	#PM2.5 display [PM2.5: 13ug/m3]
-	disp.setCursor(5,0)
-	disp.write('{:16}'.format('PM2.5: %dug/m3' % values["s_d0"]))
-	
-
-	#add CO2 display
-	disp.setCursor(6,0)
-	disp.write('{:16}'.format('CO2: %dppm' % values["s_g8"]))
-	#
-
-	#change Light to TVOC display
-	#disp.setCursor(5,0)
-	#disp.write('{:16}'.format('Light: %dLux' % values["s_l0"]))
-	#if(values["s_gg"] == 65535):
-	#	disp.setCursor(6,0)
-	#	temp = '{:16}'.format('                ')
-	#	disp.write(temp)
-	#	
-	#else:
-	#	disp.setCursor(6,0)
-	#	temp = '{:16}'.format('TVOC: %dppb' % values["s_gg"])
-	#	disp.write(temp)
-	#
-
-	disp.setCursor(7,0)
+    	disp.setCursor(7,0)
 	temp = '{:16}'.format(Conf.DEVICE_IP)
 	disp.write(temp)
 
 	disp.setCursor(7,15)
-	temp = connection_flag
-	disp.write(temp)
+    	temp = connection_flag
+    	disp.write(temp)
 	
 def reboot_system():
 	process = subprocess.Popen(['uptime'], stdout = subprocess.PIPE)
@@ -146,11 +246,6 @@ if __name__ == '__main__':
 		gas_data = '4'
 		gas = Conf.gas_sensor.sensor(Conf.gas_q)
 		gas.start()
-	#add for TVOC
-	if Conf.Sense_TVOC==1:
-		TVOC_data = '5'
-		TVOC = Conf.TVOC_sensor.sensor(Conf.tvoc_q)
-		TVOC.start()
 
 	disp = Conf.upmLCD.SSD1306(0, 0x3C)
 	disp.clear()
@@ -168,7 +263,6 @@ if __name__ == '__main__':
 	values["s_lc"] = -1
 	values["s_l0"] = -1
 	values["s_g8"] = 0
-	values["s_gg"] = 0
 	while True:
 		reboot_system()
 		check_connection()
@@ -212,18 +306,7 @@ if __name__ == '__main__':
 					if Conf.float_re_pattern.match(str(values[fields[item]])):
 						values[fields[item]] = round(float(values[fields[item]]),2)
                                 else:                                                                             
-                                        values[item] = gas_data[item]
-
-		if Conf.Sense_TVOC==1 and not Conf.tvoc_q.empty():
-			while not Conf.tvoc_q.empty():
-				TVOC_data = Conf.tvoc_q.get()
-                        for item in TVOC_data:
-                                if item in fields:
-                                        values[fields[item]] = TVOC_data[item]
-					if Conf.float_re_pattern.match(str(values[fields[item]])):
-						values[fields[item]] = round(float(values[fields[item]]),2)
-                                else:
-                                        values[item] = TVOC_data[item]
+                                        values[item] = gas_data[item]                                             
 		display_data(disp)
 		if count == 0:
 			upload_data()
