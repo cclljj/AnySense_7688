@@ -102,7 +102,7 @@ def upload_data():
 	port.write("AT+CIPSENDHEX=1\r\n".encode())
 	time.sleep(1)
 
-	port.write("AT+CSTT=\"internet.iot\"\r\n".encode())
+	port.write("AT+CSTT=\"twm.nbiot\"\r\n".encode())
 	time.sleep(1)
 
 	port.write("AT+CIICR\r\n".encode())
